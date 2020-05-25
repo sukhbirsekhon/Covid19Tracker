@@ -3,8 +3,10 @@
 Design Document
 
 Sukhbir Sekhon
+
 Devin Williams
-Benjamin Tend
+
+Benjamin Tenhover
 
 ## Introduction
 
