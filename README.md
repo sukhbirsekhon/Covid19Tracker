@@ -17,7 +17,7 @@ COVID-19 Tracker allows you to monitor the number of COVID-19 cases around the g
 - Covid-19 Tracker would also provide you with safety tips and helpful resources to keep yourself safe and healthy during pandemic. 
 
 ## Storyboard
-
+![Total Screen](https://github.com/devinqw13/Images/blob/master/totalScreen.png)
 # Requirements
 
 # Class Diagram
