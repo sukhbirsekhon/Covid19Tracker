@@ -3,8 +3,10 @@
 Design Document
 
 Sukhbir Sekhon
+
 Devin Williams
-Benjamin Tend
+
+Benjamin Tenhover
 
 ## Introduction
 
@@ -15,6 +17,9 @@ COVID-19 Tracker allows you to monitor the number of COVID-19 cases around the g
 - Covid-19 Tracker would also provide you with safety tips and helpful resources to keep yourself safe and healthy during pandemic. 
 
 ## Storyboard
+[Covid-19 Tracker Storyboard](https://projects.invisionapp.com/prototype/Covid19App-ckasbjsa000lyub0113lvsvq7/play/665064e1)
+<br />
+<img src="https://github.com/devinqw13/Images/blob/master/totalScreen.png" width="250" height="500"><img src="https://github.com/devinqw13/Images/blob/master/ByCountry.png" width="250" height="500"><img src="https://github.com/devinqw13/Images/blob/master/News.png" width="250" height="500">
 
 # Requirements
 
