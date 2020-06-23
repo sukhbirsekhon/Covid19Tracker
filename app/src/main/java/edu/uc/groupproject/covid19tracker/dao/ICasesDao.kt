@@ -1,12 +1,12 @@
 package edu.uc.groupproject.covid19tracker.dao
 
-import edu.uc.groupproject.covid19tracker.dto.Cases
+import edu.uc.groupproject.covid19tracker.dto.GlobalData
 import retrofit2.Call
 import retrofit2.http.GET
 
 interface ICasesDao {
 
-    @GET("/world/total")
-    fun getGlobalData(): Call<ArrayList<Cases>>
+    @GET("worldstat.php")
+    fun getGlobalData(): Call<ArrayList<GlobalData>>
 
 }

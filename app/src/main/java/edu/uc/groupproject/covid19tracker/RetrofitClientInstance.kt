@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClientInstance {
     private var retrofit: Retrofit? = null;
-    private val BASE_URL = "https://api.covid19api.com"
+    private val BASE_URL = "https://coronavirus-monitor.p.rapidapi.com/coronavirus/"
 
     val retrofitInstance : Retrofit?
         get() {
