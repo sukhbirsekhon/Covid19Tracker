@@ -48,17 +48,6 @@ class MainViewModel : ViewModel() {
                 totalDeath!!.get(0), recovered!!.get(0), newCases!!.get(0),
                 newDeaths!!.get(0), seriousCritical!!.get(0), casesPerMillion!!.get(0),
                 deathPerMillion!!.get(0), statistics!!.get(0))
-
-            println(g.totalCases)
-            println(g.activeCases)
-            println(g.totalDeaths)
-            println(g.totalRecovered)
-            println(g.newCases)
-            println(g.newDeaths)
-            println(g.seriousCritical)
-            println(g.totalCasesPer1mPopulation)
-            println(g.deathPer1mPopulation)
-            println(g.statisticTakenAt)
         }
     }
 
