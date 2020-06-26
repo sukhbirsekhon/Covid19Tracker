@@ -33,16 +33,16 @@ class MainViewModel : ViewModel() {
             /**
              * Call API to retrieve specific global covid19 data
              */
-            var gCases: ArrayList<String>? = gdp.getTotalCases()
-            var gActive: ArrayList<String>? = gdp.getTotalActiveCases()
-            var gTotalDeath: ArrayList<String>? = gdp.getTotalDeaths()
-            var gRecovered: ArrayList<String>? = gdp.getTotalRecovered()
-            var gNewCases: ArrayList<String>? = gdp.getTotalNewCases()
-            var gNewDeaths: ArrayList<String>? = gdp.getTotalNewDeaths()
-            var gSeriousCritical: ArrayList<String>? = gdp.getTotalSeriousCritical()
-            var gCasesPerMillion: ArrayList<String>? = gdp.getTotalCasesPerMillionPopulation()
-            var gDeathPerMillion: ArrayList<String>? = gdp.getTotalDeathsPerMillionPopulation()
-            var gStatistics: ArrayList<String>? = gdp.getStatisticTakenTime()
+            var gCases: ArrayList<String>? = gdp.getGlobalCovidData("total_cases")
+            var gActive: ArrayList<String>? = gdp.getGlobalCovidData("active_cases")
+            var gTotalDeath: ArrayList<String>? = gdp.getGlobalCovidData("total_deaths")
+            var gRecovered: ArrayList<String>? = gdp.getGlobalCovidData("total_recovered")
+            var gNewCases: ArrayList<String>? = gdp.getGlobalCovidData("new_cases")
+            var gNewDeaths: ArrayList<String>? = gdp.getGlobalCovidData("new_deaths")
+            var gSeriousCritical: ArrayList<String>? = gdp.getGlobalCovidData("serious_critical")
+            var gCasesPerMillion: ArrayList<String>? = gdp.getGlobalCovidData("total_cases_per_1m_population")
+            var gDeathPerMillion: ArrayList<String>? = gdp.getGlobalCovidData("deaths_per_1m_population")
+            var gStatistics: ArrayList<String>? = gdp.getGlobalCovidData("statistic_taken_at")
             delay(2000)
 
             /**
