@@ -9,6 +9,7 @@ import kotlinx.coroutines.*
 
 class MainViewModel : ViewModel() {
     var globalData: MutableLiveData<ArrayList<GlobalData>> = MutableLiveData<ArrayList<GlobalData>>()
+    var gmData: MutableLiveData<GlobalData> = MutableLiveData<GlobalData>()
     var casesService: CasesService = CasesService()
 
     init {
@@ -19,7 +20,6 @@ class MainViewModel : ViewModel() {
     fun fetchGlobalData() {
         // call cases service to fetch global covid19 data
         globalData = casesService.fetchGlobalData()
-        println(globalData)
     }
 
     fun globalData() {
@@ -49,16 +49,18 @@ class MainViewModel : ViewModel() {
                 newDeaths!!.get(0), seriousCritical!!.get(0), casesPerMillion!!.get(0),
                 deathPerMillion!!.get(0), statistics!!.get(0))
 
-            println(g.totalCases)
-            println(g.activeCases)
-            println(g.totalDeaths)
-            println(g.totalRecovered)
-            println(g.newCases)
-            println(g.newDeaths)
-            println(g.seriousCritical)
-            println(g.totalCasesPer1mPopulation)
-            println(g.deathPer1mPopulation)
-            println(g.statisticTakenAt)
+            gmData.value = g
+
+//            println(g.totalCases)
+//            println(g.activeCases)
+//            println(g.totalDeaths)
+//            println(g.totalRecovered)
+//            println(g.newCases)
+//            println(g.newDeaths)
+//            println(g.seriousCritical)
+//            println(g.totalCasesPer1mPopulation)
+//            println(g.deathPer1mPopulation)
+//            println(g.statisticTakenAt)
         }
     }
 

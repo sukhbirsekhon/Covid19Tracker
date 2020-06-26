@@ -3,6 +3,7 @@ package edu.uc.groupproject.covid19tracker
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import edu.uc.groupproject.covid19tracker.ui.main.MainFragment
+import edu.uc.groupproject.covid19tracker.ui.main.MainViewModel
 
 class MainActivity : AppCompatActivity() {
 
