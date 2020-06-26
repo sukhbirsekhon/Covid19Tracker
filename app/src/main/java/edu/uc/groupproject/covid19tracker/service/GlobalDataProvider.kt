@@ -7,6 +7,9 @@ import java.util.*
 
 class GlobalDataProvider {
 
+    /**
+     * Build http API request to retrieve global stats
+     */
     var client = OkHttpClient()
     var request = Request.Builder()
         .url("https://coronavirus-monitor.p.rapidapi.com/coronavirus/worldstat.php")
@@ -15,16 +18,19 @@ class GlobalDataProvider {
         .addHeader("x-rapidapi-key", "12a8dba6admshd5f767ad7c36e5bp17cb05jsn3c9cee783e36")
         .build()
 
+    /**
+     * Retrieve global number of covid19 cases
+     */
     fun getTotalCases(): ArrayList<String>? {
-        val globalCases = ArrayList<String>()
+        var globalCases = ArrayList<String>()
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {}
             override fun onResponse(call: Call, response: Response) {
                 try {
-                    val worldStat = response.body()!!.string()
-                    val Jobject = JSONObject(worldStat)
-                    val o = Jobject["total_cases"]
-                    val s = o as String
+                    var worldStat = response.body()!!.string()
+                    var Jobject = JSONObject(worldStat)
+                    var o = Jobject["total_cases"]
+                    var s = o as String
                     globalCases.add(s)
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -34,16 +40,19 @@ class GlobalDataProvider {
         return globalCases
     }
 
+    /**
+     * Retrieve global covid19 active cases
+     */
     fun getTotalActiveCases(): ArrayList<String>? {
-        val activeCases = ArrayList<String>()
+        var activeCases = ArrayList<String>()
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {}
             override fun onResponse(call: Call, response: Response) {
                 try {
-                    val worldStat = response.body()!!.string()
-                    val Jobject = JSONObject(worldStat)
-                    val o = Jobject["active_cases"]
-                    val s = o as String
+                    var worldStat = response.body()!!.string()
+                    var Jobject = JSONObject(worldStat)
+                    var o = Jobject["active_cases"]
+                    var s = o as String
                     activeCases.add(s)
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -53,16 +62,19 @@ class GlobalDataProvider {
         return activeCases
     }
 
+    /**
+     * Retrieve global number of covid19 deaths
+     */
     fun getTotalDeaths(): ArrayList<String>? {
-        val totalDeaths = ArrayList<String>()
+        var totalDeaths = ArrayList<String>()
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {}
             override fun onResponse(call: Call, response: Response) {
                 try {
-                    val worldStat = response.body()!!.string()
-                    val Jobject = JSONObject(worldStat)
-                    val o = Jobject["total_deaths"]
-                    val s = o as String
+                    var worldStat = response.body()!!.string()
+                    var Jobject = JSONObject(worldStat)
+                    var o = Jobject["total_deaths"]
+                    var s = o as String
                     totalDeaths.add(s)
                 } catch (e: java.lang.Exception) {
                     e.printStackTrace()
@@ -72,16 +84,19 @@ class GlobalDataProvider {
         return totalDeaths
     }
 
+    /**
+     * Retrieve global recovered covid19 cases
+     */
     fun getTotalRecovered(): ArrayList<String>? {
-        val totalRecovered = ArrayList<String>()
+        var totalRecovered = ArrayList<String>()
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {}
             override fun onResponse(call: Call, response: Response) {
                 try {
-                    val worldStat = response.body()!!.string()
-                    val Jobject = JSONObject(worldStat)
-                    val o = Jobject["total_recovered"]
-                    val s = o as String
+                    var worldStat = response.body()!!.string()
+                    var Jobject = JSONObject(worldStat)
+                    var o = Jobject["total_recovered"]
+                    var s = o as String
                     totalRecovered.add(s)
                 } catch (e: java.lang.Exception) {
                     e.printStackTrace()
@@ -91,16 +106,19 @@ class GlobalDataProvider {
         return totalRecovered
     }
 
+    /**
+     * Retrieve global new covid19 cases that occur every day
+     */
     fun getTotalNewCases(): ArrayList<String>? {
-        val newCases = ArrayList<String>()
+        var newCases = ArrayList<String>()
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {}
             override fun onResponse(call: Call, response: Response) {
                 try {
-                    val worldStat = response.body()!!.string()
-                    val Jobject = JSONObject(worldStat)
-                    val o = Jobject["new_cases"]
-                    val s = o as String
+                    var worldStat = response.body()!!.string()
+                    var Jobject = JSONObject(worldStat)
+                    var o = Jobject["new_cases"]
+                    var s = o as String
                     newCases.add(s)
                 } catch (e: java.lang.Exception) {
                     e.printStackTrace()
@@ -110,16 +128,19 @@ class GlobalDataProvider {
         return newCases
     }
 
+    /**
+     * Retrieve global new covid19 deaths that occur every day
+     */
     fun getTotalNewDeaths(): ArrayList<String>? {
-        val newDeaths = ArrayList<String>()
+        var newDeaths = ArrayList<String>()
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {}
             override fun onResponse(call: Call, response: Response) {
                 try {
-                    val worldStat = response.body()!!.string()
-                    val Jobject = JSONObject(worldStat)
-                    val o = Jobject["new_deaths"]
-                    val s = o as String
+                    var worldStat = response.body()!!.string()
+                    var Jobject = JSONObject(worldStat)
+                    var o = Jobject["new_deaths"]
+                    var s = o as String
                     newDeaths.add(s)
                 } catch (e: java.lang.Exception) {
                     e.printStackTrace()
@@ -129,16 +150,19 @@ class GlobalDataProvider {
         return newDeaths
     }
 
+    /**
+     * Retrieve total number of global serious critical covid19 cases
+     */
     fun getTotalSeriousCritical(): ArrayList<String>? {
-        val seriousCritical = ArrayList<String>()
+        var seriousCritical = ArrayList<String>()
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {}
             override fun onResponse(call: Call, response: Response) {
                 try {
-                    val worldStat = response.body()!!.string()
-                    val Jobject = JSONObject(worldStat)
-                    val o = Jobject["serious_critical"]
-                    val s = o as String
+                    var worldStat = response.body()!!.string()
+                    var Jobject = JSONObject(worldStat)
+                    var o = Jobject["serious_critical"]
+                    var s = o as String
                     seriousCritical.add(s)
                 } catch (e: java.lang.Exception) {
                     e.printStackTrace()
@@ -148,16 +172,19 @@ class GlobalDataProvider {
         return seriousCritical
     }
 
+    /**
+     * Retrieve global number of cases per million population
+     */
     fun getTotalCasesPerMillionPopulation(): ArrayList<String>? {
-        val casesPerMillion = ArrayList<String>()
+        var casesPerMillion = ArrayList<String>()
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {}
             override fun onResponse(call: Call, response: Response) {
                 try {
-                    val worldStat = response.body()!!.string()
-                    val Jobject = JSONObject(worldStat)
-                    val o = Jobject["total_cases_per_1m_population"]
-                    val s = o as String
+                    var worldStat = response.body()!!.string()
+                    var Jobject = JSONObject(worldStat)
+                    var o = Jobject["total_cases_per_1m_population"]
+                    var s = o as String
                     casesPerMillion.add(s)
                 } catch (e: java.lang.Exception) {
                     e.printStackTrace()
@@ -167,16 +194,19 @@ class GlobalDataProvider {
         return casesPerMillion
     }
 
+    /**
+     * Retrieve total deaths per million population
+     */
     fun getTotalDeathsPerMillionPopulation(): ArrayList<String>? {
-        val deathsPerMillion = ArrayList<String>()
+        var deathsPerMillion = ArrayList<String>()
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {}
             override fun onResponse(call: Call, response: Response) {
                 try {
-                    val worldStat = response.body()!!.string()
-                    val Jobject = JSONObject(worldStat)
-                    val o = Jobject["deaths_per_1m_population"]
-                    val s = o as String
+                    var worldStat = response.body()!!.string()
+                    var Jobject = JSONObject(worldStat)
+                    var o = Jobject["deaths_per_1m_population"]
+                    var s = o as String
                     deathsPerMillion.add(s)
                 } catch (e: java.lang.Exception) {
                     e.printStackTrace()
@@ -186,16 +216,19 @@ class GlobalDataProvider {
         return deathsPerMillion
     }
 
+    /**
+     * Retrieve the time when the data was updated
+     */
     fun getStatisticTakenTime(): ArrayList<String>? {
-        val statisticTime = ArrayList<String>()
+        var statisticTime = ArrayList<String>()
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {}
             override fun onResponse(call: Call, response: Response) {
                 try {
-                    val worldStat = response.body()!!.string()
-                    val Jobject = JSONObject(worldStat)
-                    val o = Jobject["statistic_taken_at"]
-                    val s = o as String
+                    var worldStat = response.body()!!.string()
+                    var Jobject = JSONObject(worldStat)
+                    var o = Jobject["statistic_taken_at"]
+                    var s = o as String
                     statisticTime.add(s)
                 } catch (e: java.lang.Exception) {
                     e.printStackTrace()
