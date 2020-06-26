@@ -27,6 +27,11 @@ class GlobalDataProvider {
             override fun onFailure(call: Call, e: IOException) {}
             override fun onResponse(call: Call, response: Response) {
                 try {
+                    /**
+                     * On success API call, receive json body and store it into variable, then
+                     * create a json object of the response body string so that function can
+                     * retrieve specific data from json
+                     */
                     var worldStat = response.body()!!.string()
                     var Jobject = JSONObject(worldStat)
                     var o = Jobject["total_cases"]
@@ -49,6 +54,11 @@ class GlobalDataProvider {
             override fun onFailure(call: Call, e: IOException) {}
             override fun onResponse(call: Call, response: Response) {
                 try {
+                    /**
+                     * On success API call, receive json body and store it into variable, then
+                     * create a json object of the response body string so that function can
+                     * retrieve specific data from json
+                     */
                     var worldStat = response.body()!!.string()
                     var Jobject = JSONObject(worldStat)
                     var o = Jobject["active_cases"]
@@ -71,6 +81,11 @@ class GlobalDataProvider {
             override fun onFailure(call: Call, e: IOException) {}
             override fun onResponse(call: Call, response: Response) {
                 try {
+                    /**
+                     * On success API call, receive json body and store it into variable, then
+                     * create a json object of the response body string so that function can
+                     * retrieve specific data from json
+                     */
                     var worldStat = response.body()!!.string()
                     var Jobject = JSONObject(worldStat)
                     var o = Jobject["total_deaths"]
@@ -93,6 +108,11 @@ class GlobalDataProvider {
             override fun onFailure(call: Call, e: IOException) {}
             override fun onResponse(call: Call, response: Response) {
                 try {
+                    /**
+                     * On success API call, receive json body and store it into variable, then
+                     * create a json object of the response body string so that function can
+                     * retrieve specific data from json
+                     */
                     var worldStat = response.body()!!.string()
                     var Jobject = JSONObject(worldStat)
                     var o = Jobject["total_recovered"]
@@ -115,6 +135,11 @@ class GlobalDataProvider {
             override fun onFailure(call: Call, e: IOException) {}
             override fun onResponse(call: Call, response: Response) {
                 try {
+                    /**
+                     * On success API call, receive json body and store it into variable, then
+                     * create a json object of the response body string so that function can
+                     * retrieve specific data from json
+                     */
                     var worldStat = response.body()!!.string()
                     var Jobject = JSONObject(worldStat)
                     var o = Jobject["new_cases"]
@@ -137,6 +162,11 @@ class GlobalDataProvider {
             override fun onFailure(call: Call, e: IOException) {}
             override fun onResponse(call: Call, response: Response) {
                 try {
+                    /**
+                     * On success API call, receive json body and store it into variable, then
+                     * create a json object of the response body string so that function can
+                     * retrieve specific data from json
+                     */
                     var worldStat = response.body()!!.string()
                     var Jobject = JSONObject(worldStat)
                     var o = Jobject["new_deaths"]
@@ -159,6 +189,11 @@ class GlobalDataProvider {
             override fun onFailure(call: Call, e: IOException) {}
             override fun onResponse(call: Call, response: Response) {
                 try {
+                    /**
+                     * On success API call, receive json body and store it into variable, then
+                     * create a json object of the response body string so that function can
+                     * retrieve specific data from json
+                     */
                     var worldStat = response.body()!!.string()
                     var Jobject = JSONObject(worldStat)
                     var o = Jobject["serious_critical"]
@@ -181,6 +216,11 @@ class GlobalDataProvider {
             override fun onFailure(call: Call, e: IOException) {}
             override fun onResponse(call: Call, response: Response) {
                 try {
+                    /**
+                     * On success API call, receive json body and store it into variable, then
+                     * create a json object of the response body string so that function can
+                     * retrieve specific data from json
+                     */
                     var worldStat = response.body()!!.string()
                     var Jobject = JSONObject(worldStat)
                     var o = Jobject["total_cases_per_1m_population"]
@@ -203,6 +243,11 @@ class GlobalDataProvider {
             override fun onFailure(call: Call, e: IOException) {}
             override fun onResponse(call: Call, response: Response) {
                 try {
+                    /**
+                     * On success API call, receive json body and store it into variable, then
+                     * create a json object of the response body string so that function can
+                     * retrieve specific data from json
+                     */
                     var worldStat = response.body()!!.string()
                     var Jobject = JSONObject(worldStat)
                     var o = Jobject["deaths_per_1m_population"]
@@ -225,6 +270,11 @@ class GlobalDataProvider {
             override fun onFailure(call: Call, e: IOException) {}
             override fun onResponse(call: Call, response: Response) {
                 try {
+                    /**
+                     * On success API call, receive json body and store it into variable, then
+                     * create a json object of the response body string so that function can
+                     * retrieve specific data from json
+                     */
                     var worldStat = response.body()!!.string()
                     var Jobject = JSONObject(worldStat)
                     var o = Jobject["statistic_taken_at"]
