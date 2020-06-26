@@ -16,6 +16,7 @@ class CasesService {
             override fun onFailure(call: Call<ArrayList<GlobalData>>, t: Throwable) {
                 val j = 1+1;
                 val i = 1+1;
+                println("Error received ******************" + t.toString())
             }
 
             override fun onResponse(
@@ -24,6 +25,7 @@ class CasesService {
             ) {
                 // returns response body of API if the call is successful
                 _globalData.value = response.body()
+                println("PASSES ****************************")
             }
         })
 
