@@ -15,7 +15,6 @@ object RetrofitClientInstance {
         get() {
             if (retrofit == null) {
                 val httpClient = OkHttpClient.Builder()
-
                 httpClient.addInterceptor(object : Interceptor {
                     override fun intercept(chain: Interceptor.Chain): Response? {
                         val request: Request =
@@ -24,14 +23,12 @@ object RetrofitClientInstance {
                         return chain.proceed(request)
                     }
                 })
-
                 retrofit = retrofit2.Retrofit.Builder()
                     .addConverterFactory(GsonConverterFactory.create())
                     .baseUrl(BASE_URL)
                     .client(httpClient.build())
                     .build()
             }
-
             return retrofit
         }
 }
