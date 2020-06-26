@@ -14,16 +14,18 @@ class CasesService {
         val call = service?.getGlobalData()
         call?.enqueue(object: retrofit2.Callback<ArrayList<GlobalData>> {
             override fun onFailure(call: Call<ArrayList<GlobalData>>, t: Throwable) {
-                val j = 1+1;
-                val i = 1+1;
+                println("Error recieved on API call: " + t.toString())
             }
 
             override fun onResponse(
                 call: Call<ArrayList<GlobalData>>,
                 response: Response<ArrayList<GlobalData>>
             ) {
-                // returns response body of API if the call is successful
+                /**
+                 * returns response body of API if the call is successful
+                 */
                 _globalData.value = response.body()
+                println("Successfully called the API")
             }
         })
 
