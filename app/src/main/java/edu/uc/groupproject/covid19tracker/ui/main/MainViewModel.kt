@@ -2,7 +2,9 @@ package edu.uc.groupproject.covid19tracker.ui.main
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import edu.uc.groupproject.covid19tracker.dto.Cases
 import edu.uc.groupproject.covid19tracker.dto.GlobalData
+import edu.uc.groupproject.covid19tracker.service.CasesByCountryDataProvider
 import edu.uc.groupproject.covid19tracker.service.CasesService
 import edu.uc.groupproject.covid19tracker.service.GlobalDataProvider
 import kotlinx.coroutines.*
@@ -10,6 +12,7 @@ import kotlinx.coroutines.*
 class MainViewModel : ViewModel() {
     var globalData: MutableLiveData<ArrayList<GlobalData>> = MutableLiveData<ArrayList<GlobalData>>()
     var gmData: MutableLiveData<GlobalData> = MutableLiveData<GlobalData>()
+    var cData: MutableLiveData<Cases> = MutableLiveData<Cases>()
     var casesService: CasesService = CasesService()
 
     init {
@@ -29,38 +32,49 @@ class MainViewModel : ViewModel() {
             /**
              * Call API to retrieve specific global covid19 data
              */
-            var cases: ArrayList<String>? = gdp.getTotalCases()
-            var active: ArrayList<String>? = gdp.getTotalActiveCases()
-            var totalDeath: ArrayList<String>? = gdp.getTotalDeaths()
-            var recovered: ArrayList<String>? = gdp.getTotalRecovered()
-            var newCases: ArrayList<String>? = gdp.getTotalNewCases()
-            var newDeaths: ArrayList<String>? = gdp.getTotalNewDeaths()
-            var seriousCritical: ArrayList<String>? = gdp.getTotalSeriousCritical()
-            var casesPerMillion: ArrayList<String>? = gdp.getTotalCasesPerMillionPopulation()
-            var deathPerMillion: ArrayList<String>? = gdp.getTotalDeathsPerMillionPopulation()
-            var statistics: ArrayList<String>? = gdp.getStatisticTakenTime()
+            var gCases: ArrayList<String>? = gdp.getGlobalCovidData("total_cases")
+            var gActive: ArrayList<String>? = gdp.getGlobalCovidData("active_cases")
+            var gTotalDeath: ArrayList<String>? = gdp.getGlobalCovidData("total_deaths")
+            var gRecovered: ArrayList<String>? = gdp.getGlobalCovidData("total_recovered")
+            var gNewCases: ArrayList<String>? = gdp.getGlobalCovidData("new_cases")
+            var gNewDeaths: ArrayList<String>? = gdp.getGlobalCovidData("new_deaths")
+            var gSeriousCritical: ArrayList<String>? = gdp.getGlobalCovidData("serious_critical")
+            var gCasesPerMillion: ArrayList<String>? = gdp.getGlobalCovidData("total_cases_per_1m_population")
+            var gDeathPerMillion: ArrayList<String>? = gdp.getGlobalCovidData("deaths_per_1m_population")
+            var gStatistics: ArrayList<String>? = gdp.getGlobalCovidData("statistic_taken_at")
             delay(2000)
+
 
             /**
              * Set fetched data to DTO objects
              */
-            var g = GlobalData(cases!!.get(0), active!!.get(0),
-                totalDeath!!.get(0), recovered!!.get(0), newCases!!.get(0),
-                newDeaths!!.get(0), seriousCritical!!.get(0), casesPerMillion!!.get(0),
-                deathPerMillion!!.get(0), statistics!!.get(0))
+            var globalDataDto = GlobalData(gCases!!.get(0), gActive!!.get(0),
+                gTotalDeath!!.get(0), gRecovered!!.get(0), gNewCases!!.get(0),
+                gNewDeaths!!.get(0), gSeriousCritical!!.get(0), gCasesPerMillion!!.get(0),
+                gDeathPerMillion!!.get(0), gStatistics!!.get(0))
 
-            gmData.value = g
+            gmData.value = globalDataDto
 
-//            println(g.totalCases)
-//            println(g.activeCases)
-//            println(g.totalDeaths)
-//            println(g.totalRecovered)
-//            println(g.newCases)
-//            println(g.newDeaths)
-//            println(g.seriousCritical)
-//            println(g.totalCasesPer1mPopulation)
-//            println(g.deathPer1mPopulation)
-//            println(g.statisticTakenAt)
+            var cbc : CasesByCountryDataProvider = CasesByCountryDataProvider()
+
+            /**
+             * Call API to retrieve cases by country data
+             */
+            var country: ArrayList<String>? = cbc.getCasesByCountryData("country_name")
+            var cases: ArrayList<String>? = cbc.getCasesByCountryData("cases")
+            var deaths: ArrayList<String>? = cbc.getCasesByCountryData("deaths")
+            var active: ArrayList<String>? = cbc.getCasesByCountryData("active_cases")
+            var totalRecovered: ArrayList<String>? = cbc.getCasesByCountryData("total_recovered")
+            var newDeaths: ArrayList<String>? = cbc.getCasesByCountryData("new_deaths")
+            var newCases: ArrayList<String>? = cbc.getCasesByCountryData("new_cases")
+            var seriousCritical: ArrayList<String>? = cbc.getCasesByCountryData("serious_critical")
+            var totalCasesPerMillionPopulation: ArrayList<String>? = cbc.getCasesByCountryData("total_cases_per_1m_population")
+            delay(2000)
+
+            var casesDto = Cases(country!!, cases!!, deaths!!, active!!, totalRecovered!!, newDeaths!!,
+                newCases!!, seriousCritical!!, totalCasesPerMillionPopulation!!)
+
+            cData.value = casesDto
         }
     }
 
