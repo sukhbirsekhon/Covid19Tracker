@@ -18,6 +18,9 @@ class CasesByCountryDataProvider {
         .addHeader("x-rapidapi-key", "12a8dba6admshd5f767ad7c36e5bp17cb05jsn3c9cee783e36")
         .build()
 
+    /**
+     * Retrieve country by cases covid19 data
+     */
     fun getCasesByCountryData(dataType: String):  ArrayList<String> {
         val data = ArrayList<String>()
 
@@ -25,6 +28,12 @@ class CasesByCountryDataProvider {
             override fun onFailure(call: Call, e: IOException) {}
             override fun onResponse(call: Call, response: Response) {
                 try {
+                    /**
+                     * Retrieve cases by country covid 19 data from the API call and convert it into
+                     * string. Then create a json object for that string body so that function can
+                     * iterate through each country stat block and return array list of country stat
+                     * data.
+                     */
                     val casesByCountry = response.body()!!.string()
                     val Jobject = JSONObject(casesByCountry)
                     val Jarray = Jobject.getJSONArray("countries_stat")

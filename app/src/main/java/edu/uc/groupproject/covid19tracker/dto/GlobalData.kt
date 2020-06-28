@@ -13,7 +13,6 @@ data class GlobalData(@SerializedName("total_cases") var totalCases: String,
                       @SerializedName("deaths_per_1m_population") var deathPer1mPopulation: String,
                       @SerializedName("statistic_taken_at") var statisticTakenAt: String) {
     override fun toString(): String {
-        return totalCases + activeCases + totalDeaths + totalRecovered + newCases + newDeaths +
-                seriousCritical + totalCasesPer1mPopulation + deathPer1mPopulation + statisticTakenAt
+        return "$totalCases $activeCases  $totalDeaths  $totalRecovered $newCases $newDeaths $seriousCritical $totalCasesPer1mPopulation $deathPer1mPopulation $statisticTakenAt"
     }
 }

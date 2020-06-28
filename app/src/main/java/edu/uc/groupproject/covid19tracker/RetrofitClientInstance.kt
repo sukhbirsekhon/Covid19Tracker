@@ -13,6 +13,10 @@ object RetrofitClientInstance {
 
     val retrofitInstance : Retrofit?
         get() {
+            /**
+             * If retrofit is null then create http request for API call and then create a retrofit
+             * request as well
+             */
             if (retrofit == null) {
                 val httpClient = OkHttpClient.Builder()
                 httpClient.addInterceptor(object : Interceptor {

@@ -7,6 +7,9 @@ import kotlin.collections.ArrayList
 
 interface ICasesDao {
 
+    /**
+     * Call API with specific uri to retreive global data
+     */
     @GET("worldstat.php")
     fun getGlobalData(): Call<ArrayList<GlobalData>>
 
