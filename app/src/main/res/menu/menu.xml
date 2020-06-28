@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/global"
+        android:title="Global"
+        android:icon="@drawable/ic_baseline_home_24"/>
+    <item
+        android:id="@+id/cases_by_country"
+        android:title="Cases by Country"
+        android:icon="@drawable/ic_baseline_map"/>
+    <item
+        android:id="@+id/news"
+        android:title="News"
+        android:icon="@drawable/ic_baseline_newspaper"/>
+</menu>
