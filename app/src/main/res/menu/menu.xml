@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+Create bottom navigation objects
+-->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/global"
-        android:title="Global"
-        android:icon="@drawable/ic_baseline_home_24"/>
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="Home" />
     <item
         android:id="@+id/cases_by_country"
-        android:title="Cases by Country"
-        android:icon="@drawable/ic_baseline_map"/>
+        android:icon="@drawable/ic_baseline_map"
+        android:title="Cases by Country" />
     <item
         android:id="@+id/news"
-        android:title="News"
-        android:icon="@drawable/ic_baseline_newspaper"/>
+        android:icon="@drawable/ic_baseline_newspaper"
+        android:title="News" />
 </menu>
