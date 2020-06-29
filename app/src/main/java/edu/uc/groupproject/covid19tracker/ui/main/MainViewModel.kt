@@ -16,12 +16,17 @@ class MainViewModel : ViewModel() {
     var casesService: CasesService = CasesService()
 
     init {
+        /**
+         * fetchGlobalData() is not in use yet but will use in future
+         */
         fetchGlobalData()
         globalData()
     }
 
     fun fetchGlobalData() {
-        // call cases service to fetch global covid19 data
+        /**
+         * all cases service to fetch global covid19 data
+         */
         globalData = casesService.fetchGlobalData()
     }
 
@@ -71,6 +76,9 @@ class MainViewModel : ViewModel() {
             var totalCasesPerMillionPopulation: ArrayList<String>? = cbc.getCasesByCountryData("total_cases_per_1m_population")
             delay(2000)
 
+            /**
+             * Set fetched country data to DTO object
+             */
             var casesDto = Cases(country!!, cases!!, deaths!!, active!!, totalRecovered!!, newDeaths!!,
                 newCases!!, seriousCritical!!, totalCasesPerMillionPopulation!!)
 

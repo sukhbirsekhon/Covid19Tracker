@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
 import androidx.lifecycle.Observer
@@ -16,14 +15,9 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
-import com.github.mikephil.charting.utils.ColorTemplate
-import com.jjoe64.graphview.GraphView
-import com.jjoe64.graphview.series.*
 import edu.uc.groupproject.covid19tracker.R
 import edu.uc.groupproject.covid19tracker.dto.Cases
-import edu.uc.groupproject.covid19tracker.dto.GlobalData
 import java.io.IOException
 
 class MainFragment : Fragment() {
@@ -33,7 +27,6 @@ class MainFragment : Fragment() {
     }
 
     private lateinit var viewModel: MainViewModel
-//    private var itemAdapter: ItemAdapter ? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +36,10 @@ class MainFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         super.onCreate(savedInstanceState)
+
+        /**
+         * Declare field and other necessary variables
+         */
         val view = inflater.inflate(R.layout.main_fragment, container, false)
         val recoveredTxt: TextView = view.findViewById<TextView>(R.id.recovered_num) as TextView
         val confirmedTxt: TextView = view.findViewById<TextView>(R.id.confirmed_num) as TextView
@@ -54,7 +51,6 @@ class MainFragment : Fragment() {
         val recoveredValues = ArrayList<BarEntry>()
         val deathValues = ArrayList<BarEntry>()
         val barDataSetList: ArrayList<IBarDataSet> = ArrayList()
-
 
         /**
          * Get overview data from MainViewModel and set 'Overview' section text
@@ -123,7 +119,6 @@ class MainFragment : Fragment() {
                 }
             }
 
-
             /**
              * create bar data sets
              */
@@ -153,7 +148,6 @@ class MainFragment : Fragment() {
             countryBarChart.setDescription("")
             countryBarChart.animateXY(5000,5000);
         }
-
 
         fun setCountryListViewData(caseData: Cases) {
             val casesListViewItems = ArrayList<Cases>()
