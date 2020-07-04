@@ -1,5 +1,6 @@
 package edu.uc.groupproject.covid19tracker.ui.main
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,8 @@ import android.widget.TextView
 import edu.uc.groupproject.covid19tracker.R
 import edu.uc.groupproject.covid19tracker.dto.Cases
 
-class ItemAdapter(var context: Context, var view_layout: Int, var arrayCaseList: ArrayList<Cases>): BaseAdapter() {
+class ItemAdapter(private var context: Context, var view_layout: Int, private var arrayCaseList: ArrayList<Cases>): BaseAdapter() {
+
     override fun getItem(position: Int): Any {
         return arrayCaseList[position]
     }
@@ -21,20 +23,21 @@ class ItemAdapter(var context: Context, var view_layout: Int, var arrayCaseList:
         return arrayCaseList.size
     }
 
+    @SuppressLint("SetTextI18n", "ViewHolder")
     override fun getView(position: Int, convertVire: View?, parent: ViewGroup?): View {
         val view: View = View.inflate(context, R.layout.country_list_view_layout, null)
 
-        var title: TextView = view.findViewById<TextView>(R.id.list_country)
-        var cases: TextView = view.findViewById<TextView>(R.id.list_cases)
-        var recovered: TextView = view.findViewById<TextView>(R.id.list_recovered)
-        var deaths: TextView = view.findViewById<TextView>(R.id.list_deaths)
+        val title: TextView = view.findViewById(R.id.list_country)
+        val cases: TextView = view.findViewById(R.id.list_cases)
+        val recovered: TextView = view.findViewById(R.id.list_recovered)
+        val deaths: TextView = view.findViewById(R.id.list_deaths)
 
-        var items: Cases = arrayCaseList.get(position)
-        title.text = items.country_name[0]
+        val items: Cases = arrayCaseList[position]
+        title.text = items.countryName[0]
         cases.text = "Total Cases: " + items.cases[0]
         recovered.text = "Recovered Cases: " + items.totalRecovered[0]
         deaths.text = "Total Deaths: " + items.deaths[0]
 
-        return view;
+        return view
     }
 }

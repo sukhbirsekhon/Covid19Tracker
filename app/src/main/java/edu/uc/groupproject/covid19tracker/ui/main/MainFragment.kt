@@ -1,7 +1,6 @@
 package edu.uc.groupproject.covid19tracker.ui.main
 
 import android.graphics.Color
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.TextView
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
@@ -19,6 +19,8 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import edu.uc.groupproject.covid19tracker.R
 import edu.uc.groupproject.covid19tracker.dto.Cases
 import java.io.IOException
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainFragment : Fragment() {
 
@@ -30,7 +32,7 @@ class MainFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -41,11 +43,11 @@ class MainFragment : Fragment() {
          * Declare field and other necessary variables
          */
         val view = inflater.inflate(R.layout.main_fragment, container, false)
-        val recoveredTxt: TextView = view.findViewById<TextView>(R.id.recovered_num) as TextView
-        val confirmedTxt: TextView = view.findViewById<TextView>(R.id.confirmed_num) as TextView
-        val deathsTxt: TextView = view.findViewById<TextView>(R.id.deaths_num) as TextView
-        val countryBarChart: BarChart = view.findViewById<BarChart>(R.id.by_country_bar_graph) as BarChart
-        val countryListView: ListView = view.findViewById<ListView>(R.id.country_list_view) as ListView
+        val recoveredTxt: TextView = view.findViewById(R.id.recovered_num) as TextView
+        val confirmedTxt: TextView = view.findViewById(R.id.confirmed_num) as TextView
+        val deathsTxt: TextView = view.findViewById(R.id.deaths_num) as TextView
+        val countryBarChart: BarChart = view.findViewById(R.id.by_country_bar_graph) as BarChart
+        val countryListView: ListView = view.findViewById(R.id.country_list_view) as ListView
         val xAxisLabels: ArrayList<String> = ArrayList()
         val confirmedValues = ArrayList<BarEntry>()
         val recoveredValues = ArrayList<BarEntry>()
@@ -62,7 +64,7 @@ class MainFragment : Fragment() {
                     deathsTxt.text = globalData.totalDeaths
         })
 
-        fun setBarChatData(caseData: Cases) {
+        fun setBarChartData(caseData: Cases) {
             /**
              * Loop through cases array and set confirmed array
              */
@@ -79,8 +81,8 @@ class MainFragment : Fragment() {
              * Loop through cases array and set recovered array
              */
             for(x in 0 until 5) {
-                try{
-                    if(caseData.totalRecovered[x].toLowerCase() != "n/a") {
+                try {
+                    if (caseData.totalRecovered[x].toLowerCase(Locale.ROOT) != "n/a") {
                         if(caseData.totalRecovered[x].contains(",")) {
                             val c = caseData.totalRecovered[x].replace(",", "").toFloat()
                             recoveredValues.add(BarEntry(c, x))
@@ -113,7 +115,7 @@ class MainFragment : Fragment() {
              */
             for(x in 0 until 5) {
                 try{
-                    xAxisLabels.add(caseData.country_name[x])
+                    xAxisLabels.add(caseData.countryName[x])
                 } catch(e: IOException) {
                     e.printStackTrace()
                 }
@@ -146,15 +148,15 @@ class MainFragment : Fragment() {
              */
             countryBarChart.data = data
             countryBarChart.setDescription("")
-            countryBarChart.animateXY(5000,5000);
+            countryBarChart.animateXY(5000,5000)
         }
 
         fun setCountryListViewData(caseData: Cases) {
             val casesListViewItems = ArrayList<Cases>()
-            for(x in 5 until caseData.country_name.size) {
+            for(x in 5 until caseData.countryName.size) {
                 casesListViewItems.add(Cases(cases = arrayListOf(caseData.cases[x]), deaths = arrayListOf(caseData.deaths[x]),
                     totalRecovered = arrayListOf(caseData.totalRecovered[x]), activeCases = arrayListOf(caseData.activeCases[x]),
-                    newCases = arrayListOf(caseData.newCases[x]), country_name = arrayListOf(caseData.country_name[x]), newDeaths = arrayListOf(caseData.newDeaths[x]),
+                    newCases = arrayListOf(caseData.newCases[x]), countryName = arrayListOf(caseData.countryName[x]), newDeaths = arrayListOf(caseData.newDeaths[x]),
                     seriousCritical = arrayListOf(caseData.seriousCritical[x]), totalCasesPerMillionPopulation = arrayListOf(caseData.totalCasesPerMillionPopulation[x])))
             }
             val arrAdapter = ItemAdapter(view.context, android.R.layout.simple_list_item_1, casesListViewItems)
@@ -166,7 +168,7 @@ class MainFragment : Fragment() {
          */
         viewModel.cData.observe(viewLifecycleOwner, Observer {
             caseData ->
-                setBarChatData(caseData)
+                setBarChartData(caseData)
                 setCountryListViewData(caseData)
         })
 
