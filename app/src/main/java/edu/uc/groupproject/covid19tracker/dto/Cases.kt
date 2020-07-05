@@ -2,7 +2,7 @@ package edu.uc.groupproject.covid19tracker.dto
 
 import com.google.gson.annotations.SerializedName
 
-data class Cases(@SerializedName("country_name") var country_name: ArrayList<String>,
+data class Cases(@SerializedName("country_name") var countryName: ArrayList<String>,
                  @SerializedName("cases") var cases: ArrayList<String>,
                  @SerializedName("deaths") var deaths: ArrayList<String>,
                  @SerializedName("active_cases") var activeCases: ArrayList<String>,

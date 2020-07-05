@@ -30,7 +30,7 @@ class ItemAdapter(var context: Context, var view_layout: Int, var arrayCaseList:
         var deaths: TextView = view.findViewById<TextView>(R.id.list_deaths)
 
         var items: Cases = arrayCaseList.get(position)
-        title.text = items.country_name[0]
+        title.text = items.countryName[0]
         cases.text = "Total Cases: " + items.cases[0]
         recovered.text = "Recovered Cases: " + items.totalRecovered[0]
         deaths.text = "Total Deaths: " + items.deaths[0]

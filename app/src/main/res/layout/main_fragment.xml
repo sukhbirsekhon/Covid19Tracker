@@ -30,6 +30,15 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Cases of Covid-19 by Country"
+            android:textColor="#1DA1F2"
+            android:textAlignment="center"
+            android:textSize="16dp" />
+
         <com.github.mikephil.charting.charts.BarChart
             android:layout_width="match_parent"
             android:layout_height="200dp"
@@ -132,21 +141,21 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#FFFFFFFF"
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="402dp"
                 android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:textSize="16dp"
-                android:layout_margin="10dp"
-                android:text="Country Cases" />
+                android:background="#5B000000"
+                android:text="Country Cases"
+                android:textColor="#0B0000"
+                android:textSize="16dp" />
 
             <ListView
+                android:id="@+id/country_list_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/country_list_view">
-            </ListView>
+                android:layout_height="wrap_content"></ListView>
 
         </LinearLayout>
 

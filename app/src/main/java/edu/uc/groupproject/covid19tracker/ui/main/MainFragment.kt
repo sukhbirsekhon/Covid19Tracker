@@ -113,7 +113,7 @@ class MainFragment : Fragment() {
              */
             for(x in 0 until 5) {
                 try{
-                    xAxisLabels.add(caseData.country_name[x])
+                    xAxisLabels.add(caseData.countryName[x])
                 } catch(e: IOException) {
                     e.printStackTrace()
                 }
@@ -151,10 +151,10 @@ class MainFragment : Fragment() {
 
         fun setCountryListViewData(caseData: Cases) {
             val casesListViewItems = ArrayList<Cases>()
-            for(x in 5 until caseData.country_name.size) {
+            for(x in 5 until caseData.countryName.size) {
                 casesListViewItems.add(Cases(cases = arrayListOf(caseData.cases[x]), deaths = arrayListOf(caseData.deaths[x]),
                     totalRecovered = arrayListOf(caseData.totalRecovered[x]), activeCases = arrayListOf(caseData.activeCases[x]),
-                    newCases = arrayListOf(caseData.newCases[x]), country_name = arrayListOf(caseData.country_name[x]), newDeaths = arrayListOf(caseData.newDeaths[x]),
+                    newCases = arrayListOf(caseData.newCases[x]), countryName = arrayListOf(caseData.countryName[x]), newDeaths = arrayListOf(caseData.newDeaths[x]),
                     seriousCritical = arrayListOf(caseData.seriousCritical[x]), totalCasesPerMillionPopulation = arrayListOf(caseData.totalCasesPerMillionPopulation[x])))
             }
             val arrAdapter = ItemAdapter(view.context, android.R.layout.simple_list_item_1, casesListViewItems)

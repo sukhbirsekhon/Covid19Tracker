@@ -22,7 +22,7 @@ class GlobalDataProvider {
      * Retrieve global number of covid19 cases
      */
     fun getGlobalCovidData(dataType: String): ArrayList<String>? {
-        var data = ArrayList<String>()
+        val data = ArrayList<String>()
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {}
             override fun onResponse(call: Call, response: Response) {
@@ -32,10 +32,10 @@ class GlobalDataProvider {
                      * create a json object of the response body string so that function can
                      * retrieve specific data from json
                      */
-                    var worldStat = response.body()!!.string()
-                    var Jobject = JSONObject(worldStat)
-                    var o = Jobject[dataType]
-                    var s = o as String
+                    val worldStat = response.body()!!.string()
+                    val Jobject = JSONObject(worldStat)
+                    val o = Jobject[dataType]
+                    val s = o as String
                     data.add(s)
                 } catch (e: Exception) {
                     e.printStackTrace()
