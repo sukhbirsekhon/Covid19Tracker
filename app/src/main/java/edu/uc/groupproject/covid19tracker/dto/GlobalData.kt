@@ -12,6 +12,8 @@ data class GlobalData(@SerializedName("total_cases") var totalCases: String,
                       @SerializedName("total_cases_per_1m_population") var totalCasesPer1mPopulation: String,
                       @SerializedName("deaths_per_1m_population") var deathPer1mPopulation: String,
                       @SerializedName("statistic_taken_at") var statisticTakenAt: String) {
+    constructor() : this("", "", "", "", "", "", "", "", "", ""){
+    }
     override fun toString(): String {
         return "$totalCases $activeCases  $totalDeaths  $totalRecovered $newCases $newDeaths $seriousCritical $totalCasesPer1mPopulation $deathPer1mPopulation $statisticTakenAt"
     }

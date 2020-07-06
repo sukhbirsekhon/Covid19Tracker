@@ -22,10 +22,6 @@ import java.io.IOException
 
 class MainFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = MainFragment()
-    }
-
     private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -146,7 +142,7 @@ class MainFragment : Fragment() {
              */
             countryBarChart.data = data
             countryBarChart.setDescription("")
-            countryBarChart.animateXY(5000,5000);
+            countryBarChart.animateXY(5000,5000)
         }
 
         fun setCountryListViewData(caseData: Cases) {
@@ -171,6 +167,10 @@ class MainFragment : Fragment() {
         })
 
         return view
+    }
+
+    companion object {
+        fun newInstance() = MainFragment()
     }
 
 }
