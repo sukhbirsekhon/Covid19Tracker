@@ -10,8 +10,8 @@ class CasesByCountryDataProvider {
     /**
      * Build http API request to retrieve covid19 cases data by country
      */
-    var client = OkHttpClient()
-    var request = Request.Builder()
+    private var client = OkHttpClient()
+    private var request: Request = Request.Builder()
         .url("https://coronavirus-monitor.p.rapidapi.com/coronavirus/cases_by_country.php")
         .get()
         .addHeader("x-rapidapi-host", "coronavirus-monitor.p.rapidapi.com")
@@ -35,10 +35,10 @@ class CasesByCountryDataProvider {
                      * data.
                      */
                     val casesByCountry = response.body()!!.string()
-                    val Jobject = JSONObject(casesByCountry)
-                    val Jarray = Jobject.getJSONArray("countries_stat")
-                    for (i in 0 until Jarray.length()) {
-                        val `object` = Jarray.getJSONObject(i).getString(dataType)
+                    val jsonObject = JSONObject(casesByCountry)
+                    val jsonArray = jsonObject.getJSONArray("countries_stat")
+                    for (i in 0 until jsonArray.length()) {
+                        val `object` = jsonArray.getJSONObject(i).getString(dataType)
                         data.add(`object`)
                     }
                 } catch (e: Exception) {

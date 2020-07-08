@@ -9,12 +9,12 @@ import retrofit2.Response
 
 class CasesService {
     fun fetchGlobalData() : MutableLiveData<ArrayList<GlobalData>> {
-        var _globalData = MutableLiveData<ArrayList<GlobalData>>()
+        val _globalData = MutableLiveData<ArrayList<GlobalData>>()
         val service = RetrofitClientInstance.retrofitInstance?.create(ICasesDao::class.java)
         val call = service?.getGlobalData()
         call?.enqueue(object: retrofit2.Callback<ArrayList<GlobalData>> {
-            override fun onFailure(call: Call<ArrayList<GlobalData>>, t: Throwable) {
-                println("Error recieved on API call: " + t.toString())
+            override fun onFailure(call: Call<ArrayList<GlobalData>>, error: Throwable) {
+                println("Error received on API call: $error")
             }
 
             override fun onResponse(
