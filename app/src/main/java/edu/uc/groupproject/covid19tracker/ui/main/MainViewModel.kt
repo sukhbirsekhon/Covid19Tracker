@@ -5,29 +5,18 @@ import androidx.lifecycle.ViewModel
 import edu.uc.groupproject.covid19tracker.dto.Cases
 import edu.uc.groupproject.covid19tracker.dto.GlobalData
 import edu.uc.groupproject.covid19tracker.service.CasesByCountryDataProvider
-import edu.uc.groupproject.covid19tracker.service.CasesService
 import edu.uc.groupproject.covid19tracker.service.GlobalDataProvider
 import kotlinx.coroutines.*
 
 class MainViewModel : ViewModel() {
-    private var globalData: MutableLiveData<ArrayList<GlobalData>> = MutableLiveData<ArrayList<GlobalData>>()
     var gmData: MutableLiveData<GlobalData> = MutableLiveData<GlobalData>()
     var cData: MutableLiveData<Cases> = MutableLiveData<Cases>()
-    private var casesService: CasesService = CasesService()
 
     init {
         /**
          * fetchGlobalData() is not in use yet but will use in future
          */
-        fetchGlobalData()
         globalData()
-    }
-
-    private fun fetchGlobalData() {
-        /**
-         * all cases service to fetch global covid19 data
-         */
-        globalData = casesService.fetchGlobalData()
     }
 
     private fun globalData() {
