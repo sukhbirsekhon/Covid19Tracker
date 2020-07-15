@@ -67,7 +67,7 @@ class MainViewModel : ViewModel() {
             val newDeaths: ArrayList<String>? = cbc.getCasesByCountryData("new_deaths")
             val newCases: ArrayList<String>? = cbc.getCasesByCountryData("new_cases")
             val seriousCritical: ArrayList<String>? = cbc.getCasesByCountryData("serious_critical")
-            val totalCasesPerMillionPopulation: ArrayList<String>? = cbc.getCasesByCountryData("total_cases_per_1m_population")
+            val totalCasesPerMillionPopulation: ArrayList<String>? = cbc.gaetCasesByCountryData("total_cases_per_1m_population")
             delay(2000)
 
             /**
