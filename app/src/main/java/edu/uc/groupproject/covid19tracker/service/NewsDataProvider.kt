@@ -6,8 +6,6 @@ import java.io.IOException
 
 class NewsDataProvider {
 
-
-
     fun getNewsData(country: String, dataType: String): ArrayList<String>?  {
          var client = OkHttpClient()
          var request:Request = Request.Builder()
@@ -18,9 +16,7 @@ class NewsDataProvider {
         val data = ArrayList<String>()
 
         client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                e.printStackTrace()
-            }
+            override fun onFailure(call: Call, e: IOException) {e.printStackTrace()}
             override fun onResponse(call: Call, response: Response) {
                 try {
                     /**
@@ -37,9 +33,7 @@ class NewsDataProvider {
                         val o = newsObjectArray.getJSONObject(i).getString(dataType)
                         data.add(o)
                     }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
+                } catch (e: Exception) {e.printStackTrace()}
             }
         })
         return data
