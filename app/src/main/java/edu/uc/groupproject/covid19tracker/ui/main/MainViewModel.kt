@@ -4,13 +4,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import edu.uc.groupproject.covid19tracker.dto.Cases
 import edu.uc.groupproject.covid19tracker.dto.GlobalData
+import edu.uc.groupproject.covid19tracker.dto.News
 import edu.uc.groupproject.covid19tracker.service.CasesByCountryDataProvider
 import edu.uc.groupproject.covid19tracker.service.GlobalDataProvider
+import edu.uc.groupproject.covid19tracker.service.NewsDataProvider
 import kotlinx.coroutines.*
 
 class MainViewModel : ViewModel() {
     var gmData: MutableLiveData<GlobalData> = MutableLiveData<GlobalData>()
     var cData: MutableLiveData<Cases> = MutableLiveData<Cases>()
+    var newsCountry: String = "US"
 
     init {
         /**
@@ -74,6 +77,25 @@ class MainViewModel : ViewModel() {
                 newCases!!, seriousCritical!!, totalCasesPerMillionPopulation!!)
 
             cData.value = casesDto
+
+            /**
+             * Call API to retrieve news data
+             */
+            val ndp = NewsDataProvider()
+
+            val author: ArrayList<String>? = ndp.getNewsData(newsCountry, "author")
+            val title: ArrayList<String>? = ndp.getNewsData(newsCountry, "title")
+            val description: ArrayList<String>? = ndp.getNewsData(newsCountry, "description")
+            val url: ArrayList<String>? = ndp.getNewsData(newsCountry, "url")
+            val urlToImage: ArrayList<String>? = ndp.getNewsData(newsCountry, "urlToImage")
+            val publishedAt: ArrayList<String>? = ndp.getNewsData(newsCountry, "publishedAt")
+            val content: ArrayList<String>? = ndp.getNewsData(newsCountry, "content")
+            delay(2000)
+
+            /**
+             * Set fetched news data to DTO object
+             */
+            val newsDto = News(author!!, title!!, description!!, url!!, urlToImage!!, publishedAt!!, content!!)
         }
     }
 
