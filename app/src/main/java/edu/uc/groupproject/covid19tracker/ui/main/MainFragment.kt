@@ -47,7 +47,7 @@ class MainFragment : Fragment() {
         val confirmedTxt: TextView = view.findViewById(R.id.confirmed_num) as TextView
         val deathsTxt: TextView = view.findViewById(R.id.deaths_num) as TextView
         val countryBarChart: BarChart = view.findViewById(R.id.by_country_bar_graph) as BarChart
-        val countryListView: ListView = view.findViewById(R.id.country_list_view) as ListView
+//        val countryListView: ListView = view.findViewById(R.id.country_list_view) as ListView
         val xAxisLabels: ArrayList<String> = ArrayList()
         val confirmedValues = ArrayList<BarEntry>()
         val recoveredValues = ArrayList<BarEntry>()
@@ -151,25 +151,25 @@ class MainFragment : Fragment() {
             countryBarChart.animateXY(5000,5000)
         }
 
-        fun setCountryListViewData(caseData: Cases) {
-            val casesListViewItems = ArrayList<Cases>()
-            for(x in 5 until caseData.countryName.size) {
-                casesListViewItems.add(Cases(cases = arrayListOf(caseData.cases[x]), deaths = arrayListOf(caseData.deaths[x]),
-                    totalRecovered = arrayListOf(caseData.totalRecovered[x]), activeCases = arrayListOf(caseData.activeCases[x]),
-                    newCases = arrayListOf(caseData.newCases[x]), countryName = arrayListOf(caseData.countryName[x]), newDeaths = arrayListOf(caseData.newDeaths[x]),
-                    seriousCritical = arrayListOf(caseData.seriousCritical[x]), totalCasesPerMillionPopulation = arrayListOf(caseData.totalCasesPerMillionPopulation[x])))
-            }
-            val arrAdapter = ItemAdapter(view.context, android.R.layout.simple_list_item_1, casesListViewItems)
-            countryListView.adapter = arrAdapter
-        }
+//        fun setCountryListViewData(caseData: Cases) {
+//            val casesListViewItems = ArrayList<Cases>()
+//            for(x in 5 until caseData.countryName.size) {
+//                casesListViewItems.add(Cases(cases = arrayListOf(caseData.cases[x]), deaths = arrayListOf(caseData.deaths[x]),
+//                    totalRecovered = arrayListOf(caseData.totalRecovered[x]), activeCases = arrayListOf(caseData.activeCases[x]),
+//                    newCases = arrayListOf(caseData.newCases[x]), countryName = arrayListOf(caseData.countryName[x]), newDeaths = arrayListOf(caseData.newDeaths[x]),
+//                    seriousCritical = arrayListOf(caseData.seriousCritical[x]), totalCasesPerMillionPopulation = arrayListOf(caseData.totalCasesPerMillionPopulation[x])))
+//            }
+//            val arrAdapter = ItemAdapter(view.context, android.R.layout.simple_list_item_1, casesListViewItems)
+//            countryListView.adapter = arrAdapter
+//        }
 
         /**
          * Get cases data and call function that sets data to the bar graph
          */
         viewModel.cData.observe(viewLifecycleOwner, Observer {
-            caseData ->
-                setBarChartData(caseData)
-                setCountryListViewData(caseData)
+                caseData ->
+            setBarChartData(caseData)
+//            setCountryListViewData(caseData)
         })
 
         return view

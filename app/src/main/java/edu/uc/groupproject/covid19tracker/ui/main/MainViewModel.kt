@@ -13,7 +13,7 @@ import kotlinx.coroutines.*
 class MainViewModel : ViewModel() {
     var gmData: MutableLiveData<GlobalData> = MutableLiveData<GlobalData>()
     var cData: MutableLiveData<Cases> = MutableLiveData<Cases>()
-    var newsCountry: String = "US"
+    var nData: MutableLiveData<News> = MutableLiveData<News>()
 
     init {
         /**
@@ -22,7 +22,7 @@ class MainViewModel : ViewModel() {
         globalData()
     }
 
-    private fun globalData() {
+    fun globalData() {
         GlobalScope.launch(context = Dispatchers.Main) {
             val gdp = GlobalDataProvider()
 
@@ -83,19 +83,21 @@ class MainViewModel : ViewModel() {
              */
             val ndp = NewsDataProvider()
 
-            val author: ArrayList<String>? = ndp.getNewsData(newsCountry, "author")
-            val title: ArrayList<String>? = ndp.getNewsData(newsCountry, "title")
-            val description: ArrayList<String>? = ndp.getNewsData(newsCountry, "description")
-            val url: ArrayList<String>? = ndp.getNewsData(newsCountry, "url")
-            val urlToImage: ArrayList<String>? = ndp.getNewsData(newsCountry, "urlToImage")
-            val publishedAt: ArrayList<String>? = ndp.getNewsData(newsCountry, "publishedAt")
-            val content: ArrayList<String>? = ndp.getNewsData(newsCountry, "content")
+            val author: ArrayList<String>? = ndp.getNewsData("author")
+            val title: ArrayList<String>? = ndp.getNewsData("title")
+            val description: ArrayList<String>? = ndp.getNewsData("description")
+            val url: ArrayList<String>? = ndp.getNewsData("url")
+            val urlToImage: ArrayList<String>? = ndp.getNewsData("urlToImage")
+            val publishedAt: ArrayList<String>? = ndp.getNewsData("publishedAt")
+            val content: ArrayList<String>? = ndp.getNewsData("content")
             delay(2000)
 
             /**
              * Set fetched news data to DTO object
              */
             val newsDto = News(author!!, title!!, description!!, url!!, urlToImage!!, publishedAt!!, content!!)
+
+            nData.value = newsDto
         }
     }
 

@@ -42,6 +42,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
@@ -49,6 +50,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
     implementation 'com.jjoe64:graphview:4.2.2'
     implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'
+    implementation 'com.squareup.picasso:picasso:2.4.0'
     implementation 'androidx.cardview:cardview:1.0.0'
 
     // Dependency for bottom navigation
