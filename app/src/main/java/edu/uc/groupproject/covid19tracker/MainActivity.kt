@@ -2,6 +2,8 @@ package edu.uc.groupproject.covid19tracker
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.FragmentTransaction
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import edu.uc.groupproject.covid19tracker.ui.main.ByCountryFragment
 import edu.uc.groupproject.covid19tracker.ui.main.MainFragment
 import edu.uc.groupproject.covid19tracker.ui.main.MainViewModel
@@ -9,13 +11,47 @@ import edu.uc.groupproject.covid19tracker.ui.main.NewsFragment
 
 class MainActivity : AppCompatActivity() {
 
+    lateinit var mainFragment: MainFragment
+    lateinit var byCountryFragment: ByCountryFragment
+    lateinit var newsFragment: NewsFragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, NewsFragment.newInstance())
-                    .commitNow()
+
+        val bottomNav: BottomNavigationView = findViewById(R.id.bottomNavigation)
+        bottomNav.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+
+                R.id.home -> {
+                    mainFragment = MainFragment()
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.container, mainFragment)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .commit()
+                }
+
+                R.id.cases_by_country -> {
+                    byCountryFragment = ByCountryFragment()
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.container, byCountryFragment)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .commit()
+                }
+
+                R.id.news -> {
+                    newsFragment = NewsFragment()
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.container, newsFragment)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .commit()
+                }
+            }
+            true
         }
     }
+
 }

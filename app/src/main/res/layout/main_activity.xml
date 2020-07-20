@@ -10,11 +10,6 @@
     <!--
     Bottom navigation attributes
     -->
-    <FrameLayout
-        android:id="@id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
@@ -24,5 +19,11 @@
         app:itemIconTint="@drawable/tab_color"
         app:itemTextColor="@drawable/tab_color"
         app:menu="@menu/menu" />
+
+    <FrameLayout
+        android:id="@id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomNavigation"/>
 
 </RelativeLayout>
