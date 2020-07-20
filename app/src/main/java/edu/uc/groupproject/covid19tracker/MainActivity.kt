@@ -19,10 +19,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
+        // Link the bottom navigation to the different fragments
         val bottomNav: BottomNavigationView = findViewById(R.id.bottomNavigation)
         bottomNav.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
 
+                // Link the home fragment to the home navigation button
                 R.id.home -> {
                     mainFragment = MainFragment()
                     supportFragmentManager
@@ -32,6 +34,7 @@ class MainActivity : AppCompatActivity() {
                         .commit()
                 }
 
+                // Link the cases by country fragment to the cases by country navigation button
                 R.id.cases_by_country -> {
                     byCountryFragment = ByCountryFragment()
                     supportFragmentManager
@@ -41,6 +44,7 @@ class MainActivity : AppCompatActivity() {
                         .commit()
                 }
 
+                // Link the news fragment to the news navigation button
                 R.id.news -> {
                     newsFragment = NewsFragment()
                     supportFragmentManager
@@ -53,5 +57,4 @@ class MainActivity : AppCompatActivity() {
             true
         }
     }
-
 }
