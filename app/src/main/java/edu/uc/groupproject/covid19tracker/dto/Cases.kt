@@ -10,5 +10,4 @@ data class Cases(@SerializedName("country_name") var countryName: ArrayList<Stri
                  @SerializedName("new_deaths") var newDeaths: ArrayList<String>,
                  @SerializedName("new_cases") var newCases: ArrayList<String>,
                  @SerializedName("serious_critical") var seriousCritical: ArrayList<String>,
-                 @SerializedName("total_cases_per_1m_population") var totalCasesPerMillionPopulation: ArrayList<String>) {
-}
+                 @SerializedName("total_cases_per_1m_population") var totalCasesPerMillionPopulation: ArrayList<String>)

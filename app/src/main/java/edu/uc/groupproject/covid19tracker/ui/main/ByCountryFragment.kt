@@ -120,7 +120,7 @@ class ByCountryFragment : Fragment() {
             setCountryListViewData(caseData)
         })
 
-        return view;
+        return view
     }
 
 }

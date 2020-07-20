@@ -42,7 +42,13 @@ class ItemAdapter2(private var context: Context, var view_layout: Int, private v
         val publishedAt: TextView = view.findViewById(R.id.news_publishedAt)
 
         val items: News = arrayNewsList[position]
-        Picasso.with(context).load(items.urlToImage[0]).fit().centerCrop().into(image)
+
+        try {
+            Picasso.with(context).load(items.urlToImage[0]).fit().centerCrop().into(image)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
         title.text = items.title[0]
         author.text = if (items.author[0] == "null") "Author not provided" else items.author[0]
         newsContent.text = items.description[0]
