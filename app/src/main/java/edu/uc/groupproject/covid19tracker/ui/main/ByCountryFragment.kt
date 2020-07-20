@@ -3,7 +3,6 @@ package edu.uc.groupproject.covid19tracker.ui.main
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -38,9 +37,9 @@ class ByCountryFragment : Fragment() {
          * Declare field and other necessary variables
          */
         val view = inflater.inflate(R.layout.fragment_by_country, container, false)
-        val countryListView: ListView = view.findViewById(R.id.country_list_view) as ListView
-        val countrySpinner: Spinner = view.findViewById(R.id.country_spinner) as Spinner
-        val refreshView: SwipeRefreshLayout = view.findViewById(R.id.by_country_refresh_view) as SwipeRefreshLayout
+        val countryListView: ListView = view.findViewById(R.id.country_list_view)
+        val countrySpinner: Spinner = view.findViewById(R.id.country_spinner)
+        val refreshView: SwipeRefreshLayout = view.findViewById(R.id.by_country_refresh_view)
 
         /**
          * Add refresh listen
@@ -67,14 +66,14 @@ class ByCountryFragment : Fragment() {
             /**
              * Declare custom array adapter and set list view
              */
-            val arrAdapter = ItemAdapter(view.context, android.R.layout.simple_list_item_1, casesListViewItems)
-            countryListView.adapter = arrAdapter
+            val casesListViewAdapter = ItemAdapter(view.context, casesListViewItems)
+            countryListView.adapter = casesListViewAdapter
 
             /**
              * Declare array adapter and set spinner values
              */
-            val arrayAdapter = ArrayAdapter(view.context, android.R.layout.simple_spinner_item, spinnerItemArray)
-            countrySpinner.adapter = arrayAdapter
+            val spinnerItemAdapter = ArrayAdapter(view.context, android.R.layout.simple_spinner_item, spinnerItemArray)
+            countrySpinner.adapter = spinnerItemAdapter
 
             /**
              * Add onItemSelectedListen to spinner
@@ -88,9 +87,9 @@ class ByCountryFragment : Fragment() {
                  */
                 override fun onItemSelected(parent: AdapterView<*>?, adapterView: View?,
                                             position: Int, id: Long) {
-                    val element = arrayAdapter.getItem(position)
+                    val element = spinnerItemAdapter.getItem(position)
                     if(element == "All Countries") {
-                        countryListView.adapter = arrAdapter
+                        countryListView.adapter = casesListViewAdapter
                     }else {
                         val newCasesListViewItems = ArrayList<Cases>()
                         for(x in 0 until caseData.countryName.size) {
@@ -103,7 +102,7 @@ class ByCountryFragment : Fragment() {
                                 )
                             }
                         }
-                        val newArrAdapter = ItemAdapter(view.context, android.R.layout.simple_list_item_1, newCasesListViewItems)
+                        val newArrAdapter = ItemAdapter(view.context, newCasesListViewItems)
                         countryListView.adapter = newArrAdapter
                     }
                 }

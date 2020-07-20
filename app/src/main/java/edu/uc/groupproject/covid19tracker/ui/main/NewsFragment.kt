@@ -32,13 +32,12 @@ class NewsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
         /**
          * Declare field and other necessary variables
          */
         val view = inflater.inflate(R.layout.fragment_news, container, false)
-        val newsListView: ListView = view.findViewById(R.id.news_list_view) as ListView
-        val refreshView: SwipeRefreshLayout = view.findViewById(R.id.news_refresh_view) as SwipeRefreshLayout
+        val newsListView: ListView = view.findViewById(R.id.news_list_view)
+        val refreshView: SwipeRefreshLayout = view.findViewById(R.id.news_refresh_view)
 
         /**
          * Add refresh listen
@@ -47,7 +46,6 @@ class NewsFragment : Fragment() {
             viewModel.globalData()
             refreshView.isRefreshing = false
         }
-
 
         fun setNewsListViewData(newsData: News) {
             /**
@@ -61,7 +59,7 @@ class NewsFragment : Fragment() {
                     content = arrayListOf(newsData.title[x]))
                 )
             }
-            val arrAdapter = ItemAdapter2(view.context, android.R.layout.simple_list_item_1, newsListViewItems)
+            val arrAdapter = ItemAdapter2(view.context, newsListViewItems)
             newsListView.adapter = arrAdapter
 
             /**
@@ -79,10 +77,8 @@ class NewsFragment : Fragment() {
              */
             val searchBar: EditText = view.findViewById(R.id.search_bar) as EditText
             searchBar.addTextChangedListener(object: TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                }
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                }
+                override fun afterTextChanged(s: Editable?) { }
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
 
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                     if(s.isEmpty()) {
@@ -98,7 +94,10 @@ class NewsFragment : Fragment() {
                                 )
                             }
                         }
-                        val searchedArrAdapter = ItemAdapter2(view.context, android.R.layout.simple_list_item_1, searchedNewsListViewItems)
+                        val searchedArrAdapter = ItemAdapter2(
+                            view.context,
+                            searchedNewsListViewItems
+                        )
                         newsListView.adapter = searchedArrAdapter
                     }
                 }
