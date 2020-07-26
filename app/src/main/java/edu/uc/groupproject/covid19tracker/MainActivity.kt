@@ -10,9 +10,9 @@ import edu.uc.groupproject.covid19tracker.ui.main.NewsFragment
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var mainFragment: MainFragment
-    lateinit var byCountryFragment: ByCountryFragment
-    lateinit var newsFragment: NewsFragment
+    private lateinit var mainFragment: MainFragment
+    private lateinit var byCountryFragment: ByCountryFragment
+    private lateinit var newsFragment: NewsFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
