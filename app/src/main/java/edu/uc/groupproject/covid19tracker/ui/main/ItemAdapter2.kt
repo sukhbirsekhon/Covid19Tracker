@@ -16,7 +16,7 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.collections.ArrayList
 
-class ItemAdapter2(private var context: Context, var view_layout: Int, private var arrayNewsList: ArrayList<News>): BaseAdapter() {
+class ItemAdapter2(private var context: Context, private var arrayNewsList: ArrayList<News>): BaseAdapter() {
 
     override fun getItem(position: Int): News {
         return arrayNewsList[position]
