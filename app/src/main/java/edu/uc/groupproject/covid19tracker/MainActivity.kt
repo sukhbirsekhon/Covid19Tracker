@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import edu.uc.groupproject.covid19tracker.ui.main.ByCountryFragment
 import edu.uc.groupproject.covid19tracker.ui.main.MainFragment
-import edu.uc.groupproject.covid19tracker.ui.main.MainViewModel
 import edu.uc.groupproject.covid19tracker.ui.main.NewsFragment
 
 class MainActivity : AppCompatActivity() {
