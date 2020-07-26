@@ -52,7 +52,7 @@ class ItemAdapter2(private var context: Context, var view_layout: Int, private v
         author.text = if (items.author[0] == "null") "Author not provided" else items.author[0]
         newsContent.text = items.description[0]
 
-        var date = ""
+        val date: String
 
         date = if(items.publishedAt[0].contains("T") && items.publishedAt[0].contains("Z")) {
             Instant.parse(items.publishedAt[0]).atOffset(ZoneOffset.UTC)
