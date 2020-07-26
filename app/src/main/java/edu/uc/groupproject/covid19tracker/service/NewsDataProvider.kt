@@ -24,7 +24,7 @@ class NewsDataProvider {
                      * create a json object of the response body string so that function can
                      * retrieve specific data from json
                      */
-                    val newsData: String? = response.body()!!.string()
+                    val newsData = response.body()!!.string()
 
                     val newsObject = JSONObject(newsData)
                     val newsObjectArray = newsObject.getJSONArray("articles")
