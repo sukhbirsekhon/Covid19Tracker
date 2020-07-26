@@ -7,8 +7,8 @@ import java.io.IOException
 class NewsDataProvider {
 
     fun getNewsData(dataType: String): ArrayList<String>?  {
-         var client = OkHttpClient()
-         var request:Request = Request.Builder()
+         val client = OkHttpClient()
+         val request:Request = Request.Builder()
             .url("https://newsapi.org/v2/top-headlines?q=coronavirus&sortBy=popularity&apiKey=6c8417610d7e44a59e12d3758d004968")
             .get()
             .build()
@@ -24,7 +24,7 @@ class NewsDataProvider {
                      * create a json object of the response body string so that function can
                      * retrieve specific data from json
                      */
-                    var newsData: String? = response.body()!!.string()
+                    val newsData: String? = response.body()!!.string()
 
                     val newsObject = JSONObject(newsData)
                     val newsObjectArray = newsObject.getJSONArray("articles")
