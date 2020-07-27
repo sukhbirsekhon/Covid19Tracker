@@ -1,12 +1,17 @@
 package edu.uc.groupproject.covid19tracker.ui.main
 
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.github.mikephil.charting.charts.BarChart
@@ -17,11 +22,27 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import edu.uc.groupproject.covid19tracker.R
 import edu.uc.groupproject.covid19tracker.dto.Cases
+import edu.uc.groupproject.covid19tracker.dto.StatesData
+import edu.uc.groupproject.covid19tracker.service.StateDataProvider
+import edu.uc.groupproject.covid19tracker.utility.StateNameToCode
+import kotlinx.android.synthetic.main.main_fragment.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.io.IOException
+import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class MainFragment : Fragment() {
+
+    private val LOCATION_PERMISSION_REQUEST_CODE = 2000
+    private lateinit var locationViewModel: LocationViewModel
+
+    private var lat: Double = 0.0
+    private var long: Double = 0.0
 
     companion object {
     }
@@ -31,6 +52,7 @@ class MainFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        locationViewModel = ViewModelProvider(this).get(LocationViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -169,8 +191,97 @@ class MainFragment : Fragment() {
             setBarChartData(caseData)
 //            setCountryListViewData(caseData)
         })
-
+        prepRequestLocationUpdates()
         return view
     }
 
+    private fun prepRequestLocationUpdates() {
+        val permissionRequest = arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION)
+        requestPermissions(permissionRequest, LOCATION_PERMISSION_REQUEST_CODE)
+    }
+
+    fun requestLocationUpdate() {
+        locationViewModel = ViewModelProvider(this).get(locationViewModel::class.java)
+
+        locationViewModel.getLocationLiveData().observe(this, Observer {
+            Log.d("Latitude", it.latitude)
+            Log.d("Longitude", it.longitude)
+
+            lat = it.latitude.toDouble()
+            long = it.longitude.toDouble()
+
+            retrieveStateCasesData()
+        })
+    }
+
+    /**
+     * Retrieve the state information like state name and based on the info, call the api and
+     * retrieve covid 19 cases data of user locality.
+     *
+     */
+    private fun retrieveStateCasesData() {
+        try {
+            var geoCoder = Geocoder(context)
+            var addresses: List<Address>
+            addresses = geoCoder.getFromLocation(lat, long, 1)
+
+            var stateUtility = StateNameToCode()
+            var states: HashMap<String, String> = stateUtility.convertStateNameToCode()
+
+            var country: String = addresses.get(0).countryName
+            var countryCode: String = addresses.get(0).countryCode
+            var locality: String = addresses.get(0).locality
+            var state: String = addresses.get(0).adminArea
+
+            Log.d("Country name", country)
+            Log.d("Country code", countryCode)
+            Log.d("Locality", locality)
+            Log.d("state", states.get(state))
+
+            GlobalScope.launch(context = Dispatchers.Main) {
+                val stateDataProvider = StateDataProvider()
+
+                val date: ArrayList<Int>? = stateDataProvider.getStateData(states.get(state).toString().toLowerCase(), "date")
+                val total: ArrayList<Int>? = stateDataProvider.getStateData(states.get(state).toString().toLowerCase(), "total")
+                val positive: ArrayList<Int>? = stateDataProvider.getStateData(states.get(state).toString().toLowerCase(), "positive")
+                val death: ArrayList<Int>? = stateDataProvider.getStateData(states.get(state).toString().toLowerCase(), "death")
+                val hospitalizedCurrently: ArrayList<Int>? = stateDataProvider.getStateData(states.get(state).toString().toLowerCase(), "hospitalizedCurrently")
+                delay(2000)
+
+                if(!date.isNullOrEmpty()) {
+                    var statesData = StatesData(
+                        date!!.get(0),
+                        total!!.get(0),
+                        positive!!.get(0),
+                        death!!.get(0),
+                        hospitalizedCurrently!!.get((0))
+                    )
+                    Log.d("states date:", statesData.toString())
+                }
+                else {
+                    Toast.makeText(context, "Unable to update user local data", Toast.LENGTH_LONG).show()
+                }
+            }
+        } catch (e:Exception) {
+            Toast.makeText(context, "Unable to update user local data", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when(requestCode) {
+            LOCATION_PERMISSION_REQUEST_CODE -> {
+                if(grantResults.isNotEmpty() && grantResults[0] ==  PackageManager.PERMISSION_GRANTED) {
+                    requestLocationUpdate()
+                }
+                else {
+                    Toast.makeText(context, "Unable to update location without permission", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
 }

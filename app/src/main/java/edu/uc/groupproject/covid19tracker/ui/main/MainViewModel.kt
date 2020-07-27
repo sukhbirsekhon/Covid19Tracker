@@ -1,5 +1,6 @@
 package edu.uc.groupproject.covid19tracker.ui.main
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import edu.uc.groupproject.covid19tracker.dto.Cases
@@ -8,6 +9,7 @@ import edu.uc.groupproject.covid19tracker.dto.News
 import edu.uc.groupproject.covid19tracker.service.CasesByCountryDataProvider
 import edu.uc.groupproject.covid19tracker.service.GlobalDataProvider
 import edu.uc.groupproject.covid19tracker.service.NewsDataProvider
+import edu.uc.groupproject.covid19tracker.service.StateDataProvider
 import kotlinx.coroutines.*
 
 class MainViewModel : ViewModel() {
