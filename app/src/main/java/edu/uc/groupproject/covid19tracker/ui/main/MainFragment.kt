@@ -6,12 +6,12 @@ import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.github.mikephil.charting.charts.BarChart
@@ -22,13 +22,19 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import edu.uc.groupproject.covid19tracker.R
 import edu.uc.groupproject.covid19tracker.dto.Cases
-import edu.uc.groupproject.covid19tracker.dto.GlobalData
-import edu.uc.groupproject.covid19tracker.service.CasesByCountryDataProvider
-import edu.uc.groupproject.covid19tracker.service.GlobalDataProvider
+import edu.uc.groupproject.covid19tracker.dto.StatesData
+import edu.uc.groupproject.covid19tracker.service.StateDataProvider
+import edu.uc.groupproject.covid19tracker.utility.StateNameToCode
 import kotlinx.android.synthetic.main.main_fragment.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.io.IOException
+import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class MainFragment : Fragment() {
 
@@ -194,29 +200,71 @@ class MainFragment : Fragment() {
         requestPermissions(permissionRequest, LOCATION_PERMISSION_REQUEST_CODE)
     }
 
-    private fun requestLocationUpdate() {
+    fun requestLocationUpdate() {
         locationViewModel = ViewModelProvider(this).get(locationViewModel::class.java)
 
         locationViewModel.getLocationLiveData().observe(this, Observer {
             Log.d("Latitude", it.latitude)
             Log.d("Longitude", it.longitude)
-            lblLatitudeValue.text = it.latitude
-            lblLongitudeValue.text = it.longitude
+
             lat = it.latitude.toDouble()
             long = it.longitude.toDouble()
 
-            var geoCoder: Geocoder = Geocoder(context)
+            retrieveStateCasesData()
+        })
+    }
+
+    /**
+     * Retrieve the state information like state name and based on the info, call the api and
+     * retrieve covid 19 cases data of user locality.
+     *
+     */
+    private fun retrieveStateCasesData() {
+        try {
+            var geoCoder = Geocoder(context)
             var addresses: List<Address>
             addresses = geoCoder.getFromLocation(lat, long, 1)
+
+            var stateUtility = StateNameToCode()
+            var states: HashMap<String, String> = stateUtility.convertStateNameToCode()
 
             var country: String = addresses.get(0).countryName
             var countryCode: String = addresses.get(0).countryCode
             var locality: String = addresses.get(0).locality
+            var state: String = addresses.get(0).adminArea
 
             Log.d("Country name", country)
             Log.d("Country code", countryCode)
             Log.d("Locality", locality)
-        })
+            Log.d("state", states.get(state))
+
+            GlobalScope.launch(context = Dispatchers.Main) {
+                val stateDataProvider = StateDataProvider()
+
+                val date: ArrayList<Int>? = stateDataProvider.getStateData(states.get(state).toString().toLowerCase(), "date")
+                val total: ArrayList<Int>? = stateDataProvider.getStateData(states.get(state).toString().toLowerCase(), "total")
+                val positive: ArrayList<Int>? = stateDataProvider.getStateData(states.get(state).toString().toLowerCase(), "positive")
+                val death: ArrayList<Int>? = stateDataProvider.getStateData(states.get(state).toString().toLowerCase(), "death")
+                val hospitalizedCurrently: ArrayList<Int>? = stateDataProvider.getStateData(states.get(state).toString().toLowerCase(), "hospitalizedCurrently")
+                delay(2000)
+
+                if(!date.isNullOrEmpty()) {
+                    var statesData = StatesData(
+                        date!!.get(0),
+                        total!!.get(0),
+                        positive!!.get(0),
+                        death!!.get(0),
+                        hospitalizedCurrently!!.get((0))
+                    )
+                    Log.d("states date:", statesData.toString())
+                }
+                else {
+                    Toast.makeText(context, "Unable to update user local data", Toast.LENGTH_LONG).show()
+                }
+            }
+        } catch (e:Exception) {
+            Toast.makeText(context, "Unable to update user local data", Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -236,5 +284,4 @@ class MainFragment : Fragment() {
             }
         }
     }
-
 }
