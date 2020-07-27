@@ -45,7 +45,6 @@ class MainFragment : Fragment() {
         val confirmedTxt: TextView = view.findViewById(R.id.confirmed_num)
         val deathsTxt: TextView = view.findViewById(R.id.deaths_num)
         val countryBarChart: BarChart = view.findViewById(R.id.by_country_bar_graph)
-//        val countryListView: ListView = view.findViewById(R.id.country_list_view) as ListView
         val xAxisLabels: ArrayList<String> = ArrayList()
         val confirmedValues = ArrayList<BarEntry>()
         val recoveredValues = ArrayList<BarEntry>()
@@ -68,8 +67,14 @@ class MainFragment : Fragment() {
              */
             for(x in 0 until 5) {
                 try{
-                    val c = caseData.cases[x].replace(",", "").toFloat()
-                    confirmedValues.add(BarEntry(c, x))
+                    if(caseData.cases[x].contains(",")) {
+                        val replaceCharInString = caseData.cases[x].replace(",", "")
+                        val convertToFloat = replaceCharInString.toFloat()
+                        confirmedValues.add(BarEntry(convertToFloat, x))
+                    }else {
+                        val totalCasesToFloat = caseData.cases[x].toFloat()
+                        confirmedValues.add(BarEntry(totalCasesToFloat, x))
+                    }
                 } catch(e: IOException) {
                     e.printStackTrace()
                 }
@@ -82,11 +87,12 @@ class MainFragment : Fragment() {
                 try {
                     if (caseData.totalRecovered[x].toLowerCase(Locale.ROOT) != "n/a") {
                         if(caseData.totalRecovered[x].contains(",")) {
-                            val c = caseData.totalRecovered[x].replace(",", "").toFloat()
-                            recoveredValues.add(BarEntry(c, x))
+                            val replaceCharInString = caseData.totalRecovered[x].replace(",", "")
+                            val convertToFloat = replaceCharInString.toFloat()
+                            recoveredValues.add(BarEntry(convertToFloat, x))
                         }else {
-                            val c = caseData.totalRecovered[x].toFloat()
-                            recoveredValues.add(BarEntry(c, x))
+                            val totalRecoveredToFloat = caseData.totalRecovered[x].toFloat()
+                            recoveredValues.add(BarEntry(totalRecoveredToFloat, x))
                         }
                     }else {
                         recoveredValues.add(BarEntry(0f, x))
@@ -101,8 +107,14 @@ class MainFragment : Fragment() {
              */
             for(x in 0 until 5) {
                 try{
-                    val c = caseData.deaths[x].replace(",", "").toFloat()
-                    deathValues.add(BarEntry(c, x))
+                    if(caseData.deaths[x].contains(",")) {
+                        val replaceCharInString = caseData.deaths[x].replace(",", "")
+                        val convertToFloat = replaceCharInString.toFloat()
+                        deathValues.add(BarEntry(convertToFloat, x))
+                    }else {
+                        val totalDeathsToFloat = caseData.deaths[x].toFloat()
+                        deathValues.add(BarEntry(totalDeathsToFloat, x))
+                    }
                 } catch(e: IOException) {
                     e.printStackTrace()
                 }
@@ -148,18 +160,6 @@ class MainFragment : Fragment() {
             countryBarChart.setDescription("")
             countryBarChart.animateXY(5000,5000)
         }
-
-//        fun setCountryListViewData(caseData: Cases) {
-//            val casesListViewItems = ArrayList<Cases>()
-//            for(x in 5 until caseData.countryName.size) {
-//                casesListViewItems.add(Cases(cases = arrayListOf(caseData.cases[x]), deaths = arrayListOf(caseData.deaths[x]),
-//                    totalRecovered = arrayListOf(caseData.totalRecovered[x]), activeCases = arrayListOf(caseData.activeCases[x]),
-//                    newCases = arrayListOf(caseData.newCases[x]), countryName = arrayListOf(caseData.countryName[x]), newDeaths = arrayListOf(caseData.newDeaths[x]),
-//                    seriousCritical = arrayListOf(caseData.seriousCritical[x]), totalCasesPerMillionPopulation = arrayListOf(caseData.totalCasesPerMillionPopulation[x])))
-//            }
-//            val arrAdapter = ItemAdapter(view.context, android.R.layout.simple_list_item_1, casesListViewItems)
-//            countryListView.adapter = arrAdapter
-//        }
 
         /**
          * Get cases data and call function that sets data to the bar graph
