@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="home"
+            android:text="Home"
             android:textStyle="bold"
             android:textSize="20sp"
             android:textColor="#FFF"
@@ -51,7 +51,7 @@
             android:textColor="#000"
             android:textSize="16sp"
             android:layout_margin="10dp"
-            android:text="overview" />
+            android:text="Overview" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -70,7 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="confirmed"
+                    android:text="Confirmed"
                     android:textColor="#000"/>
 
                 <TextView
@@ -91,7 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="recovered"
+                    android:text="Recovered"
                     android:textColor="#000"/>
 
                 <TextView
@@ -112,7 +112,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="deaths"
+                    android:text="Deaths"
                     android:textColor="#000"/>
 
                 <TextView
