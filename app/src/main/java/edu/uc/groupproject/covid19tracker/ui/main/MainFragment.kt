@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.TextView
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.github.mikephil.charting.charts.BarChart
@@ -16,6 +17,7 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
+import edu.uc.groupproject.covid19tracker.BarChartFragment
 import edu.uc.groupproject.covid19tracker.R
 import edu.uc.groupproject.covid19tracker.dto.Cases
 import java.io.IOException
