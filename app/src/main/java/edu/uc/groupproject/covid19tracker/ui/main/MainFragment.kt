@@ -41,10 +41,10 @@ class MainFragment : Fragment() {
          * Declare field and other necessary variables
          */
         val view = inflater.inflate(R.layout.main_fragment, container, false)
-        val recoveredTxt: TextView = view.findViewById(R.id.recovered_num) as TextView
-        val confirmedTxt: TextView = view.findViewById(R.id.confirmed_num) as TextView
-        val deathsTxt: TextView = view.findViewById(R.id.deaths_num) as TextView
-        val countryBarChart: BarChart = view.findViewById(R.id.by_country_bar_graph) as BarChart
+        val recoveredTxt: TextView = view.findViewById(R.id.recovered_num)
+        val confirmedTxt: TextView = view.findViewById(R.id.confirmed_num)
+        val deathsTxt: TextView = view.findViewById(R.id.deaths_num)
+        val countryBarChart: BarChart = view.findViewById(R.id.by_country_bar_graph)
 //        val countryListView: ListView = view.findViewById(R.id.country_list_view) as ListView
         val xAxisLabels: ArrayList<String> = ArrayList()
         val confirmedValues = ArrayList<BarEntry>()

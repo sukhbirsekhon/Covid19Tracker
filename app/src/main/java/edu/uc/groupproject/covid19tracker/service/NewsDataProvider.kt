@@ -1,5 +1,6 @@
 package edu.uc.groupproject.covid19tracker.service
 
+import android.util.Log
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
@@ -16,7 +17,11 @@ class NewsDataProvider {
         val data = ArrayList<String>()
 
         client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {e.printStackTrace()}
+
+            override fun onFailure(call: Call, e: IOException) {
+                Log.d("onFailure", "onFailure called from getNewsData: ${e.printStackTrace()}")
+            }
+
             override fun onResponse(call: Call, response: Response) {
                 try {
                     /**
@@ -24,8 +29,7 @@ class NewsDataProvider {
                      * create a json object of the response body string so that function can
                      * retrieve specific data from json
                      */
-                    val newsData = response.body()!!.string()
-
+                    val newsData: String = response.body()!!.string()
                     val newsObject = JSONObject(newsData)
                     val newsObjectArray = newsObject.getJSONArray("articles")
 

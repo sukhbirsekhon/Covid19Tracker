@@ -16,7 +16,7 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.collections.ArrayList
 
-class ItemAdapter2(private var context: Context, var view_layout: Int, private var arrayNewsList: ArrayList<News>): BaseAdapter() {
+class ItemAdapter2(private var context: Context, private var arrayNewsList: ArrayList<News>): BaseAdapter() {
 
     override fun getItem(position: Int): News {
         return arrayNewsList[position]
@@ -32,7 +32,7 @@ class ItemAdapter2(private var context: Context, var view_layout: Int, private v
 
     @SuppressLint("SetTextI18n", "ViewHolder")
     override fun getView(position: Int, convertVire: View?, parent: ViewGroup?): View {
-        val view: View = View.inflate(context, R.layout.news_list_view_layout, null)
+        val view = View.inflate(context, R.layout.news_list_view_layout, null)
 
         val title: TextView = view.findViewById(R.id.news_title)
         val image: ImageView = view.findViewById(R.id.news_image)
@@ -49,8 +49,12 @@ class ItemAdapter2(private var context: Context, var view_layout: Int, private v
         }
 
         title.text = items.title[0]
-        author.text = if (items.author[0] == "null") "Author not provided" else items.author[0]
         newsContent.text = items.description[0]
+        author.text = if (items.author[0] == "null") {
+            "Author not provided"
+        } else {
+            items.author[0]
+        }
 
         val date: String
 

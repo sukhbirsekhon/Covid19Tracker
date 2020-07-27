@@ -6,13 +6,13 @@ Create bottom navigation objects
     <item
         android:id="@+id/home"
         android:icon="@drawable/ic_baseline_home_24"
-        android:title="Home" />
+        android:title="@string/menu_home" />
     <item
         android:id="@+id/cases_by_country"
         android:icon="@drawable/ic_baseline_map"
-        android:title="Cases by Country" />
+        android:title="@string/menu_cases_by_country" />
     <item
         android:id="@+id/news"
         android:icon="@drawable/ic_baseline_newspaper"
-        android:title="News" />
+        android:title="@string/menu_news" />
 </menu>

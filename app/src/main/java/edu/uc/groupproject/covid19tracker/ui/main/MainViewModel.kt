@@ -54,20 +54,20 @@ class MainViewModel : ViewModel() {
 
             gmData.value = globalDataDto
 
-            val cbc = CasesByCountryDataProvider()
+            val casesByCountry = CasesByCountryDataProvider()
 
             /**
              * Call API to retrieve cases by country data
              */
-            val country: ArrayList<String>? = cbc.getCasesByCountryData("country_name")
-            val cases: ArrayList<String>? = cbc.getCasesByCountryData("cases")
-            val deaths: ArrayList<String>? = cbc.getCasesByCountryData("deaths")
-            val active: ArrayList<String>? = cbc.getCasesByCountryData("active_cases")
-            val totalRecovered: ArrayList<String>? = cbc.getCasesByCountryData("total_recovered")
-            val newDeaths: ArrayList<String>? = cbc.getCasesByCountryData("new_deaths")
-            val newCases: ArrayList<String>? = cbc.getCasesByCountryData("new_cases")
-            val seriousCritical: ArrayList<String>? = cbc.getCasesByCountryData("serious_critical")
-            val totalCasesPerMillionPopulation: ArrayList<String>? = cbc.getCasesByCountryData("total_cases_per_1m_population")
+            val country: ArrayList<String>? = casesByCountry.getCasesByCountryData("country_name")
+            val cases: ArrayList<String>? = casesByCountry.getCasesByCountryData("cases")
+            val deaths: ArrayList<String>? = casesByCountry.getCasesByCountryData("deaths")
+            val active: ArrayList<String>? = casesByCountry.getCasesByCountryData("active_cases")
+            val totalRecovered: ArrayList<String>? = casesByCountry.getCasesByCountryData("total_recovered")
+            val newDeaths: ArrayList<String>? = casesByCountry.getCasesByCountryData("new_deaths")
+            val newCases: ArrayList<String>? = casesByCountry.getCasesByCountryData("new_cases")
+            val seriousCritical: ArrayList<String>? = casesByCountry.getCasesByCountryData("serious_critical")
+            val totalCasesPerMillionPopulation: ArrayList<String>? = casesByCountry.getCasesByCountryData("total_cases_per_1m_population")
             delay(2000)
 
             /**
@@ -81,15 +81,15 @@ class MainViewModel : ViewModel() {
             /**
              * Call API to retrieve news data
              */
-            val ndp = NewsDataProvider()
+            val newsData = NewsDataProvider()
 
-            val author: ArrayList<String>? = ndp.getNewsData("author")
-            val title: ArrayList<String>? = ndp.getNewsData("title")
-            val description: ArrayList<String>? = ndp.getNewsData("description")
-            val url: ArrayList<String>? = ndp.getNewsData("url")
-            val urlToImage: ArrayList<String>? = ndp.getNewsData("urlToImage")
-            val publishedAt: ArrayList<String>? = ndp.getNewsData("publishedAt")
-            val content: ArrayList<String>? = ndp.getNewsData("content")
+            val author: ArrayList<String>? = newsData.getNewsData("author")
+            val title: ArrayList<String>? = newsData.getNewsData("title")
+            val description: ArrayList<String>? = newsData.getNewsData("description")
+            val url: ArrayList<String>? = newsData.getNewsData("url")
+            val urlToImage: ArrayList<String>? = newsData.getNewsData("urlToImage")
+            val publishedAt: ArrayList<String>? = newsData.getNewsData("publishedAt")
+            val content: ArrayList<String>? = newsData.getNewsData("content")
             delay(2000)
 
             /**
