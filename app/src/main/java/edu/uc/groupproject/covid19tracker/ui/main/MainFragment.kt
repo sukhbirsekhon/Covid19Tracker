@@ -2,6 +2,8 @@ package edu.uc.groupproject.covid19tracker.ui.main
 
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -21,6 +23,9 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import edu.uc.groupproject.covid19tracker.R
 import edu.uc.groupproject.covid19tracker.dto.Cases
+import edu.uc.groupproject.covid19tracker.dto.GlobalData
+import edu.uc.groupproject.covid19tracker.service.CasesByCountryDataProvider
+import edu.uc.groupproject.covid19tracker.service.GlobalDataProvider
 import kotlinx.android.synthetic.main.main_fragment.*
 import java.io.IOException
 import java.util.*
@@ -30,6 +35,9 @@ class MainFragment : Fragment() {
 
     private val LOCATION_PERMISSION_REQUEST_CODE = 2000
     private lateinit var locationViewModel: LocationViewModel
+
+    private var lat: Double = 0.0
+    private var long: Double = 0.0
 
     companion object {
         fun newInstance() = MainFragment()
@@ -194,9 +202,22 @@ class MainFragment : Fragment() {
         locationViewModel.getLocationLiveData().observe(this, Observer {
             Log.d("Latitude", it.latitude)
             Log.d("Longitude", it.longitude)
-            println("**********")
             lblLatitudeValue.text = it.latitude
             lblLongitudeValue.text = it.longitude
+            lat = it.latitude.toDouble()
+            long = it.longitude.toDouble()
+
+            var geoCoder: Geocoder = Geocoder(context)
+            var addresses: List<Address>
+            addresses = geoCoder.getFromLocation(lat, long, 1)
+
+            var country: String = addresses.get(0).countryName
+            var countryCode: String = addresses.get(0).countryCode
+            var locality: String = addresses.get(0).locality
+
+            Log.d("Country name", country)
+            Log.d("Country code", countryCode)
+            Log.d("Locality", locality)
         })
     }
 
