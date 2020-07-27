@@ -52,6 +52,7 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'
     implementation 'com.squareup.picasso:picasso:2.4.0'
     implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
 
     // Dependency for bottom navigation
     implementation 'com.google.android.material:material:1.0.0'
