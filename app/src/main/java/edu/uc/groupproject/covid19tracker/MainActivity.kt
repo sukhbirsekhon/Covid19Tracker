@@ -2,6 +2,7 @@ package edu.uc.groupproject.covid19tracker
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import edu.uc.groupproject.covid19tracker.ui.main.ByCountryFragment
@@ -9,7 +10,7 @@ import edu.uc.groupproject.covid19tracker.ui.main.MainFragment
 import edu.uc.groupproject.covid19tracker.ui.main.NewsFragment
 
 class MainActivity : AppCompatActivity() {
-
+    lateinit var barChartFragment: BarChartFragment
     private lateinit var mainFragment: MainFragment
     private lateinit var byCountryFragment: ByCountryFragment
     private lateinit var newsFragment: NewsFragment
@@ -55,5 +56,13 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+    }
+    fun barChartFragment(view: View) {
+        barChartFragment = BarChartFragment()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.container, barChartFragment)
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .commit()
     }
 }
