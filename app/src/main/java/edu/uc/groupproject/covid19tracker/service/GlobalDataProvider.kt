@@ -1,5 +1,6 @@
 package edu.uc.groupproject.covid19tracker.service
 
+import android.util.Log
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
@@ -11,7 +12,7 @@ class GlobalDataProvider {
      * Build http API request to retrieve global stats
      */
     private var client = OkHttpClient()
-    private var request: Request = Request.Builder()
+    private var request = Request.Builder()
         .url("https://coronavirus-monitor.p.rapidapi.com/coronavirus/worldstat.php")
         .get()
         .addHeader("x-rapidapi-host", "coronavirus-monitor.p.rapidapi.com")
@@ -24,7 +25,11 @@ class GlobalDataProvider {
     fun getGlobalCovidData(dataType: String): ArrayList<String>? {
         val data = ArrayList<String>()
         client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {}
+
+            override fun onFailure(call: Call, e: IOException) {
+                Log.d("onFailure", "onFailure called from getGlobalCovidData: ${e.printStackTrace()}")
+            }
+
             override fun onResponse(call: Call, response: Response) {
                 try {
                     /**

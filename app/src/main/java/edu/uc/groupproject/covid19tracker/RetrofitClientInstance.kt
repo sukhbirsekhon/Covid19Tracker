@@ -19,15 +19,13 @@ object RetrofitClientInstance {
              */
             if (retrofit == null) {
                 val httpClient = OkHttpClient.Builder()
-                httpClient.addInterceptor(object : Interceptor {
-                    override fun intercept(chain: Interceptor.Chain): Response? {
-                        val request: Request =
-                            chain.request().newBuilder().addHeader("x-rapidapi-host", "coronavirus-monitor.p.rapidapi.com")
-                                .addHeader("x-rapidapi-key", "12a8dba6admshd5f767ad7c36e5bp17cb05jsn3c9cee783e36").build()
-                        return chain.proceed(request)
-                    }
-                })
-                retrofit = retrofit2.Retrofit.Builder()
+                httpClient.addInterceptor { chain ->
+                    val request =
+                        chain.request().newBuilder().addHeader("x-rapidapi-host", "coronavirus-monitor.p.rapidapi.com")
+                            .addHeader("x-rapidapi-key", "12a8dba6admshd5f767ad7c36e5bp17cb05jsn3c9cee783e36").build()
+                    chain.proceed(request)
+                }
+                retrofit = Retrofit.Builder()
                     .addConverterFactory(GsonConverterFactory.create())
                     .baseUrl(BASE_URL)
                     .client(httpClient.build())

@@ -15,9 +15,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="News"
+            android:text="@string/news_fragment_news"
             android:textStyle="bold"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textColor="#FFF"
             android:gravity="center"/>
 
@@ -28,8 +28,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/search_bar"
         android:layout_margin="5dp"
-        android:hint="Search"
-        android:drawableLeft="@drawable/ic_baseline_search_24"
+        android:hint="@string/news_search_hint"
+        android:drawableStart="@drawable/ic_baseline_search_24"
         android:background="@drawable/search_bar">
     </EditText>
 

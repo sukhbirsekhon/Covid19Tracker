@@ -9,7 +9,7 @@ import android.widget.TextView
 import edu.uc.groupproject.covid19tracker.R
 import edu.uc.groupproject.covid19tracker.dto.Cases
 
-class ItemAdapter(private var context: Context, var view_layout: Int, private var arrayCaseList: ArrayList<Cases>): BaseAdapter() {
+class ItemAdapter(private var context: Context, private var arrayCaseList: ArrayList<Cases>): BaseAdapter() {
 
     override fun getItem(position: Int): Any {
         return arrayCaseList[position]
@@ -25,7 +25,7 @@ class ItemAdapter(private var context: Context, var view_layout: Int, private va
 
     @SuppressLint("SetTextI18n", "ViewHolder")
     override fun getView(position: Int, convertVire: View?, parent: ViewGroup?): View {
-        val view: View = View.inflate(context, R.layout.country_list_view_layout, null)
+        val view = View.inflate(context, R.layout.country_list_view_layout, null)
 
         val title: TextView = view.findViewById(R.id.list_country)
         val cases: TextView = view.findViewById(R.id.list_cases)
@@ -33,6 +33,7 @@ class ItemAdapter(private var context: Context, var view_layout: Int, private va
         val deaths: TextView = view.findViewById(R.id.list_deaths)
 
         val items: Cases = arrayCaseList[position]
+
         title.text = items.countryName[0]
         cases.text = "Total Cases: " + items.cases[0]
         recovered.text = "Recovered Cases: " + items.totalRecovered[0]
