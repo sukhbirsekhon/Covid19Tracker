@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ListView
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -25,7 +24,6 @@ import kotlin.collections.ArrayList
 class MainFragment : Fragment() {
 
     companion object {
-        fun newInstance() = MainFragment()
     }
 
     private lateinit var viewModel: MainViewModel
