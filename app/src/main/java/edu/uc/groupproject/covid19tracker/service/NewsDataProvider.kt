@@ -30,7 +30,6 @@ class NewsDataProvider {
                      * retrieve specific data from json
                      */
                     val newsData: String = response.body()!!.string()
-
                     val newsObject = JSONObject(newsData)
                     val newsObjectArray = newsObject.getJSONArray("articles")
 

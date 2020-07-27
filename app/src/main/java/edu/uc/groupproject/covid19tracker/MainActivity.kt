@@ -6,14 +6,13 @@ import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import edu.uc.groupproject.covid19tracker.ui.main.ByCountryFragment
 import edu.uc.groupproject.covid19tracker.ui.main.MainFragment
-import edu.uc.groupproject.covid19tracker.ui.main.MainViewModel
 import edu.uc.groupproject.covid19tracker.ui.main.NewsFragment
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var mainFragment: MainFragment
-    lateinit var byCountryFragment: ByCountryFragment
-    lateinit var newsFragment: NewsFragment
+    private lateinit var mainFragment: MainFragment
+    private lateinit var byCountryFragment: ByCountryFragment
+    private lateinit var newsFragment: NewsFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

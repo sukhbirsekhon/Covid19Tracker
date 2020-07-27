@@ -20,7 +20,7 @@ import edu.uc.groupproject.covid19tracker.dto.News
 class NewsFragment : Fragment() {
 
     companion object {
-        fun newInstance() = NewsFragment()
+
     }
 
     private lateinit var viewModel: MainViewModel
