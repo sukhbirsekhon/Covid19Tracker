@@ -38,11 +38,11 @@ class StateDataProvider {
                      */
                     val stateData = response.body()!!.string()
                     val stateObject = JSONObject(stateData)
-                    val o = stateObject[dataType]
-                    if(o is Int) {
-                        val s = o as Int
-                        data.add(s)
-                    } else if(o is JsonObject){
+                    val dataObject = stateObject[dataType]
+                    if(dataObject is Int) {
+                        val element = dataObject
+                        data.add(element)
+                    } else if(dataObject is JsonObject){
                         val integer = 0
                         data.add(integer)
                     }

@@ -50,7 +50,7 @@ class StateNameToCode {
         states.put("New York","NY")
         states.put("Newfoundland","NF")
         states.put("North Carolina","NC")
-        states.put("North Dakota","ND");
+        states.put("North Dakota","ND")
         states.put("Northwest Territories","NT")
         states.put("Nova Scotia","NS")
         states.put("Nunavut","NU")

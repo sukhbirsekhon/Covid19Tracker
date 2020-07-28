@@ -25,7 +25,6 @@ import edu.uc.groupproject.covid19tracker.dto.Cases
 import edu.uc.groupproject.covid19tracker.dto.StatesData
 import edu.uc.groupproject.covid19tracker.service.StateDataProvider
 import edu.uc.groupproject.covid19tracker.utility.StateNameToCode
-import kotlinx.android.synthetic.main.main_fragment.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -43,9 +42,6 @@ class MainFragment : Fragment() {
 
     private var lat: Double = 0.0
     private var long: Double = 0.0
-
-    companion object {
-    }
 
     private lateinit var viewModel: MainViewModel
 
@@ -189,7 +185,6 @@ class MainFragment : Fragment() {
         viewModel.cData.observe(viewLifecycleOwner, Observer {
                 caseData ->
             setBarChartData(caseData)
-//            setCountryListViewData(caseData)
         })
         prepRequestLocationUpdates()
         return view
@@ -249,13 +244,7 @@ class MainFragment : Fragment() {
                 delay(2000)
 
                 if(!date.isNullOrEmpty()) {
-                    var statesData = StatesData(
-                        date!!.get(0),
-                        total!!.get(0),
-                        positive!!.get(0),
-                        death!!.get(0),
-                        hospitalizedCurrently!!.get((0))
-                    )
+                    var statesData = StatesData(date.get(0), total!!.get(0), positive!!.get(0), death!!.get(0), hospitalizedCurrently!!.get((0)))
                     Log.d("states date:", statesData.toString())
                 }
                 else {
@@ -267,11 +256,7 @@ class MainFragment : Fragment() {
         }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when(requestCode) {
             LOCATION_PERMISSION_REQUEST_CODE -> {

@@ -38,10 +38,10 @@ class GlobalDataProvider {
                      * retrieve specific data from json
                      */
                     val worldStat = response.body()!!.string()
-                    val jsonObject = JSONObject(worldStat)
-                    val o = jsonObject[dataType]
-                    val s = o as String
-                    data.add(s)
+                    val globalDataObject = JSONObject(worldStat)
+                    val globalData = globalDataObject[dataType]
+                    val stringDataType = globalData as String
+                    data.add(stringDataType)
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
