@@ -90,7 +90,7 @@ class MainFragment : Fragment() {
              */
             for(x in 0 until 5) {
                 try{
-                    if(caseData.cases[x].isNullOrEmpty()) {
+                    if(!caseData.cases[x].isNullOrEmpty()) {
                         if (caseData.cases[x].contains(",")) {
                             val replaceCharInString = caseData.cases[x].replace(",", "")
                             val convertToFloat = replaceCharInString.toFloat()
@@ -112,7 +112,7 @@ class MainFragment : Fragment() {
              */
             for(x in 0 until 5) {
                 try {
-                    if(caseData.totalRecovered[x].isNullOrEmpty()) {
+                    if(!caseData.totalRecovered[x].isNullOrEmpty()) {
                         if (caseData.totalRecovered[x].toLowerCase(Locale.ROOT) != "n/a") {
                             if (caseData.totalRecovered[x].contains(",")) {
                                 val replaceCharInString =
@@ -139,7 +139,7 @@ class MainFragment : Fragment() {
              */
             for(x in 0 until 5) {
                 try{
-                    if(caseData.deaths[x].isNullOrEmpty()) {
+                    if(!caseData.deaths[x].isNullOrEmpty()) {
                         if(caseData.deaths[x].contains(",")) {
                             val replaceCharInString = caseData.deaths[x].replace(",", "")
                             val convertToFloat = replaceCharInString.toFloat()
