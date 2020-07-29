@@ -46,6 +46,7 @@ class MainFragment : Fragment() {
     private var long: Double = 0.0
 
     companion object {
+        fun newInstance() = MainFragment()
     }
 
     private lateinit var viewModel: MainViewModel
