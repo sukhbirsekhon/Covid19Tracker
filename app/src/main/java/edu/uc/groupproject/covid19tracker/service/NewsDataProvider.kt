@@ -34,8 +34,8 @@ class NewsDataProvider {
                     val newsObjectArray = newsObject.getJSONArray("articles")
 
                     for (i in 0 until newsObjectArray.length()) {
-                        val o = newsObjectArray.getJSONObject(i).getString(dataType)
-                        data.add(o)
+                        val newsElement = newsObjectArray.getJSONObject(i).getString(dataType)
+                        data.add(newsElement)
                     }
                 } catch (e: Exception) {e.printStackTrace()}
             }

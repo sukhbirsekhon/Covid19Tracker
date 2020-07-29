@@ -38,10 +38,10 @@ class CasesByCountryDataProvider {
                      * data.
                      */
                     val casesByCountry = response.body()!!.string()
-                    val jsonObject = JSONObject(casesByCountry)
-                    val jsonArray = jsonObject.getJSONArray("countries_stat")
-                    for (i in 0 until jsonArray.length()) {
-                        val `object` = jsonArray.getJSONObject(i).getString(dataType)
+                    val casesObject = JSONObject(casesByCountry)
+                    val casesArray = casesObject.getJSONArray("countries_stat")
+                    for (i in 0 until casesArray.length()) {
+                        val `object` = casesArray.getJSONObject(i).getString(dataType)
                         data.add(`object`)
                     }
                 } catch (e: Exception) {

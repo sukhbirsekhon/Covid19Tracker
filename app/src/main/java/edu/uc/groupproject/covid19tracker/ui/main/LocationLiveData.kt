@@ -55,7 +55,7 @@ class LocationLiveData(context: Context) : LiveData<LocationDetails>() {
      * If we've received a location update, this function will be called
      */
     private fun setLocationData(location: Location) {
-        value = LocationDetails(location.longitude.toString() ?: "", location.latitude.toString() ?: "")
+        value = LocationDetails(location.longitude.toString(), location.latitude.toString())
         Log.d("Location Details", value.toString())
     }
 
