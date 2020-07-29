@@ -7,7 +7,7 @@
     <string name="main_fragment_overview">Overview</string>
     <string name="main_fragment_confirmed">Confirmed</string>
     <string name="main_fragment_zero">0</string>
-    <string name="main_fragment_local_cases">Local Cases</string>
+    <string name="main_fragment_local_cases">Local Cases (US Only)</string>
     <string name="main_fragment_Deaths">Deaths</string>
     <string name="main_fragment_recovered">Recovered</string>
     <string name="news_search_hint">Search</string>

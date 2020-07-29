@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -89,13 +90,17 @@ class MainFragment : Fragment() {
              */
             for(x in 0 until 5) {
                 try{
-                    if(caseData.cases[x].contains(",")) {
-                        val replaceCharInString = caseData.cases[x].replace(",", "")
-                        val convertToFloat = replaceCharInString.toFloat()
-                        confirmedValues.add(BarEntry(convertToFloat, x))
+                    if(caseData.cases[x].isNullOrEmpty()) {
+                        if (caseData.cases[x].contains(",")) {
+                            val replaceCharInString = caseData.cases[x].replace(",", "")
+                            val convertToFloat = replaceCharInString.toFloat()
+                            confirmedValues.add(BarEntry(convertToFloat, x))
+                        } else {
+                            val totalCasesToFloat = caseData.cases[x].toFloat()
+                            confirmedValues.add(BarEntry(totalCasesToFloat, x))
+                        }
                     }else {
-                        val totalCasesToFloat = caseData.cases[x].toFloat()
-                        confirmedValues.add(BarEntry(totalCasesToFloat, x))
+                        confirmedValues.add(BarEntry(0f, x))
                     }
                 } catch(e: IOException) {
                     e.printStackTrace()
@@ -107,17 +112,22 @@ class MainFragment : Fragment() {
              */
             for(x in 0 until 5) {
                 try {
-                    if (caseData.totalRecovered[x].toLowerCase(Locale.ROOT) != "n/a") {
-                        if(caseData.totalRecovered[x].contains(",")) {
-                            val replaceCharInString = caseData.totalRecovered[x].replace(",", "")
-                            val convertToFloat = replaceCharInString.toFloat()
-                            recoveredValues.add(BarEntry(convertToFloat, x))
-                        }else {
-                            val totalRecoveredToFloat = caseData.totalRecovered[x].toFloat()
-                            recoveredValues.add(BarEntry(totalRecoveredToFloat, x))
+                    if(caseData.totalRecovered[x].isNullOrEmpty()) {
+                        if (caseData.totalRecovered[x].toLowerCase(Locale.ROOT) != "n/a") {
+                            if (caseData.totalRecovered[x].contains(",")) {
+                                val replaceCharInString =
+                                    caseData.totalRecovered[x].replace(",", "")
+                                val convertToFloat = replaceCharInString.toFloat()
+                                recoveredValues.add(BarEntry(convertToFloat, x))
+                            } else {
+                                val totalRecoveredToFloat = caseData.totalRecovered[x].toFloat()
+                                recoveredValues.add(BarEntry(totalRecoveredToFloat, x))
+                            }
+                        } else {
+                            recoveredValues.add(BarEntry(0f, x))
                         }
                     }else {
-                        recoveredValues.add(BarEntry(0f, x))
+                        deathValues.add(BarEntry(0f, x))
                     }
                 } catch(e: IOException) {
                     e.printStackTrace()
@@ -129,13 +139,18 @@ class MainFragment : Fragment() {
              */
             for(x in 0 until 5) {
                 try{
-                    if(caseData.deaths[x].contains(",")) {
-                        val replaceCharInString = caseData.deaths[x].replace(",", "")
-                        val convertToFloat = replaceCharInString.toFloat()
-                        deathValues.add(BarEntry(convertToFloat, x))
-                    }else {
-                        val totalDeathsToFloat = caseData.deaths[x].toFloat()
-                        deathValues.add(BarEntry(totalDeathsToFloat, x))
+                    if(caseData.deaths[x].isNullOrEmpty()) {
+                        if(caseData.deaths[x].contains(",")) {
+                            val replaceCharInString = caseData.deaths[x].replace(",", "")
+                            val convertToFloat = replaceCharInString.toFloat()
+                            deathValues.add(BarEntry(convertToFloat, x))
+
+                        }else {
+                            val totalDeathsToFloat = caseData.deaths[x].toFloat()
+                            deathValues.add(BarEntry(totalDeathsToFloat, x))
+                        }
+                    } else{
+                        deathValues.add(BarEntry(0f, x))
                     }
                 } catch(e: IOException) {
                     e.printStackTrace()
@@ -159,6 +174,7 @@ class MainFragment : Fragment() {
             val confirmedSet = BarDataSet(confirmedValues, "Confirmed Cases")
             val recoveredSet = BarDataSet(recoveredValues, "Recovered Cases")
             val deathSet = BarDataSet(deathValues, "Death Cases")
+
             confirmedSet.color = Color.BLUE
             recoveredSet.color = Color.GREEN
             deathSet.color = Color.RED
@@ -189,7 +205,6 @@ class MainFragment : Fragment() {
         viewModel.cData.observe(viewLifecycleOwner, Observer {
                 caseData ->
             setBarChartData(caseData)
-//            setCountryListViewData(caseData)
         })
         prepRequestLocationUpdates()
         return view
@@ -256,6 +271,9 @@ class MainFragment : Fragment() {
                         death!!.get(0),
                         hospitalizedCurrently!!.get((0))
                     )
+
+                    setLocalCasesLabels(statesData, "$locality, $state")
+
                     Log.d("states date:", statesData.toString())
                 }
                 else {
@@ -266,6 +284,29 @@ class MainFragment : Fragment() {
             Toast.makeText(context, "Unable to update user local data", Toast.LENGTH_LONG).show()
         }
     }
+
+    private fun setLocalCasesLabels(statesData: StatesData, location: String) {
+        var linearLayoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+
+        user_location.text = location
+        linearLayoutParams.setMargins(30,10,10,10)
+        linearLayoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+        linearLayoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
+        user_location.layoutParams = linearLayoutParams
+
+        user_local_total.text = "Total Cases: ${statesData.total}"
+        user_local_total.layoutParams = linearLayoutParams
+
+        user_local_positive.text = "Positive Cases: ${statesData.positive}"
+        user_local_positive.layoutParams = linearLayoutParams
+
+        user_local_deaths.text = "Deaths: ${statesData.death}"
+        user_local_deaths.layoutParams = linearLayoutParams
+
+        user_local_hospitalized.text = "Hospitalized: ${statesData.hospitalizedCurrently}"
+        user_local_hospitalized.layoutParams = linearLayoutParams
+    }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
