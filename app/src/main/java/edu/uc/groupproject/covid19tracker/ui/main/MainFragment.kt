@@ -52,8 +52,8 @@ class MainFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         locationViewModel = ViewModelProvider(this).get(LocationViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -77,11 +77,11 @@ class MainFragment : Fragment() {
         /**
          * Get overview data from MainViewModel and set 'Overview' section text
          */
-        viewModel.gmData.observe(viewLifecycleOwner, Observer {
+        viewModel.fireData.observe(viewLifecycleOwner, Observer {
                 globalData ->
-                    recoveredTxt.text = globalData.totalRecovered
-                    confirmedTxt.text = globalData.totalCases
-                    deathsTxt.text = globalData.totalDeaths
+                    recoveredTxt.text = globalData.recovered
+                    confirmedTxt.text = globalData.active
+                    deathsTxt.text = globalData.totalDeath
         })
 
         fun setBarChartData(caseData: Cases) {

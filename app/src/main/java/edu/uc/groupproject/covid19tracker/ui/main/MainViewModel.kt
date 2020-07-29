@@ -1,8 +1,13 @@
 package edu.uc.groupproject.covid19tracker.ui.main
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.firestore.FirebaseFirestoreSettings
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import edu.uc.groupproject.covid19tracker.dto.Cases
+import edu.uc.groupproject.covid19tracker.dto.FirebaseGlobalData
 import edu.uc.groupproject.covid19tracker.dto.GlobalData
 import edu.uc.groupproject.covid19tracker.dto.News
 import edu.uc.groupproject.covid19tracker.service.CasesByCountryDataProvider
@@ -12,11 +17,27 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class MainViewModel : ViewModel() {
     var gmData: MutableLiveData<GlobalData> = MutableLiveData<GlobalData>()
     var cData: MutableLiveData<Cases> = MutableLiveData<Cases>()
     var nData: MutableLiveData<News> = MutableLiveData<News>()
+
+    var firestore = Firebase.firestore
+    var documentId: String = ""
+    var documentData: Map<String, Any> = HashMap()
+    var firebaseGData: FirebaseGlobalData = FirebaseGlobalData()
+    var fireData: MutableLiveData<FirebaseGlobalData> = MutableLiveData<FirebaseGlobalData>()
+
+    var globalDataDto = GlobalData()
+
+    lateinit var firebaseActiveCases: String
+    lateinit var firebaseFatalCases: String
+    lateinit var firebaseTotalCases: String
+    lateinit var firebaseRecoveredCases: String
 
     init {
         globalData()
@@ -97,18 +118,45 @@ class MainViewModel : ViewModel() {
         val gStatistics: ArrayList<String>? = gdp.getGlobalCovidData("statistic_taken_at")
         delay(2000)
 
-        /**
-         * Set fetched data to DTO objects
-         */
-        val globalDataDto = GlobalData(
-            gCases!![0], gActive!![0],
-            gTotalDeath!![0], gRecovered!![0], gNewCases!![0],
-            gNewDeaths!![0], gSeriousCritical!![0], gCasesPerMillion!![0],
-            gDeathPerMillion!![0], gStatistics!![0]
-        )
+        globalDataDto = GlobalData(gCases!![0], gActive!![0], gTotalDeath!![0], gRecovered!![0],
+            gNewCases!![0], gNewDeaths!![0], gSeriousCritical!![0], gCasesPerMillion!![0],
+            gDeathPerMillion!![0], gStatistics!![0])
 
-        gmData.value = globalDataDto
+        firebaseGData = FirebaseGlobalData(gCases!![0], gActive!![0], gTotalDeath!![0], gRecovered!![0])
+
+        fireData.value = firebaseGData
+
+        uploadDataToFirebase(firebaseGData)
+        retrieveFirebaseGlobalData()
     }
 
+    fun uploadDataToFirebase(firebaseGData: FirebaseGlobalData) {
+
+        firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
+        val collection = firestore.collection("Global Data").document(LocalDateTime.now().toString())
+        collection.set(firebaseGData)
+
+    }
+
+    fun retrieveFirebaseGlobalData() {
+        firestore.collection("Global Data").get().addOnSuccessListener { result ->
+           firebaseActiveCases = result.documents.last().data!!["active"].toString()
+           firebaseRecoveredCases = result.documents.last().data!!["recovered"].toString()
+           firebaseFatalCases = result.documents.last().data!!["totalDeath"].toString()
+           firebaseTotalCases = result.documents.last().data!!["cases"].toString()
+
+            Log.d("Active", firebaseActiveCases)
+            Log.d("Fatal", firebaseFatalCases)
+            Log.d("Total", firebaseTotalCases)
+            Log.d("Recovered", firebaseRecoveredCases)
+
+            firebaseGData = FirebaseGlobalData(
+                firebaseTotalCases,
+                firebaseActiveCases,
+                firebaseTotalCases,
+                firebaseRecoveredCases
+            )
+        }
+    }
 
 }

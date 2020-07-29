@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "547967520107",
+    "firebase_url": "https://covid19tracker-2dc34.firebaseio.com",
+    "project_id": "covid19tracker-2dc34",
+    "storage_bucket": "covid19tracker-2dc34.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:547967520107:android:b38552f522b8341d25d02e",
+        "android_client_info": {
+          "package_name": "edu.uc.groupproject.covid19tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "547967520107-p8svtfj3ve04tv2rvbl2v9gkhmael63d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFW9b-9HLndOUA2bG_AIRmwL_sYjy3cCY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "547967520107-p8svtfj3ve04tv2rvbl2v9gkhmael63d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
