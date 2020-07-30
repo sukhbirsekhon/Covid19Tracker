@@ -1,7 +1,7 @@
 package edu.uc.groupproject.covid19tracker
 
 import edu.uc.groupproject.covid19tracker.service.GlobalDataProvider
-import org.junit.Assert.*
+import org.junit.Assert.assertNotEquals
 import org.junit.Test
 
 /**

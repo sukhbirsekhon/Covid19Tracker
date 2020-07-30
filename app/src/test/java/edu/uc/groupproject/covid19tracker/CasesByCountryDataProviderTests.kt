@@ -1,9 +1,9 @@
 package edu.uc.groupproject.covid19tracker
 
 import edu.uc.groupproject.covid19tracker.service.CasesByCountryDataProvider
-import edu.uc.groupproject.covid19tracker.service.GlobalDataProvider
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
 import org.junit.Test
-import org.junit.Assert.*
 
 /**
  * Tests confirming data is being received from Cases by Country API
@@ -15,10 +15,10 @@ class CasesByCountryDataProviderTests {
         var country: ArrayList<String>? = casesByCountryData.getCasesByCountryData("country_name")
         Thread.sleep(2000)
         assertNotEquals(country!!.size, 0)
-        assertEquals(country!!.contains("USA"), true)
-        assertEquals(country!!.contains("Mexico"), true)
-        assertEquals(country!!.contains("jfkasjflkajs"), false)
-        assertEquals(country!!.contains("Mexco"), false)
+        assertEquals(country.contains("USA"), true)
+        assertEquals(country.contains("Mexico"), true)
+        assertEquals(country.contains("jfkasjflkajs"), false)
+        assertEquals(country.contains("Mexco"), false)
     }
 
     @Test
