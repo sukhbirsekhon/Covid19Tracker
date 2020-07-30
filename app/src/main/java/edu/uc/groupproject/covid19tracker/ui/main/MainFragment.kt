@@ -266,7 +266,7 @@ class MainFragment : Fragment() {
 
                 if(!date.isNullOrEmpty()) {
                     var statesData = StatesData(
-                        date!!.get(0),
+                        date.get(0),
                         total!!.get(0),
                         positive!!.get(0),
                         death!!.get(0),

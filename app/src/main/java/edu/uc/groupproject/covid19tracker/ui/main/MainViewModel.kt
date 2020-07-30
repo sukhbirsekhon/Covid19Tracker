@@ -122,7 +122,7 @@ class MainViewModel : ViewModel() {
             gNewCases!![0], gNewDeaths!![0], gSeriousCritical!![0], gCasesPerMillion!![0],
             gDeathPerMillion!![0], gStatistics!![0])
 
-        firebaseGData = FirebaseGlobalData(gCases!![0], gActive!![0], gTotalDeath!![0], gRecovered!![0])
+        firebaseGData = FirebaseGlobalData(gCases[0], gActive[0], gTotalDeath[0], gRecovered[0])
 
         fireData.value = firebaseGData
 
