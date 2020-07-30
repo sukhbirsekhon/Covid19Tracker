@@ -2,15 +2,11 @@ package edu.uc.groupproject.covid19tracker
 
 import edu.uc.groupproject.covid19tracker.service.CasesByCountryDataProvider
 import edu.uc.groupproject.covid19tracker.service.GlobalDataProvider
-
 import org.junit.Test
-
 import org.junit.Assert.*
 
 /**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
+ * Tests confirming data is being received from Cases by Country API
  */
 class CasesByCountryDataProviderTests {
     @Test
@@ -31,9 +27,6 @@ class CasesByCountryDataProviderTests {
         val cases: ArrayList<String>? = casesByCountryData.getCasesByCountryData("cases")
         Thread.sleep(2000)
         assertNotEquals(cases!!.size, 0)
-        assertNotEquals(cases!!.contains("cases"), true)
-        assertNotEquals(cases!!.contains("1.5"), true)
-
     }
 
     @Test
@@ -42,7 +35,6 @@ class CasesByCountryDataProviderTests {
         val deaths: ArrayList<String>? = casesByCountryData.getCasesByCountryData("deaths")
         Thread.sleep(2000)
         assertNotEquals(deaths!!.size, 0)
-
     }
 
     @Test
@@ -51,7 +43,6 @@ class CasesByCountryDataProviderTests {
         val activeCases: ArrayList<String>? = casesByCountryData.getCasesByCountryData("active_cases")
         Thread.sleep(2000)
         assertNotEquals(activeCases!!.size, 0)
-
     }
 
     @Test
@@ -60,7 +51,6 @@ class CasesByCountryDataProviderTests {
         val totalRecovered: ArrayList<String>? = casesByCountryData.getCasesByCountryData("total_recovered")
         Thread.sleep(2000)
         assertNotEquals(totalRecovered!!.size, 0)
-
     }
 
     @Test
@@ -69,7 +59,6 @@ class CasesByCountryDataProviderTests {
         val newDeaths: ArrayList<String>? = casesByCountryData.getCasesByCountryData("new_deaths")
         Thread.sleep(2000)
         assertNotEquals(newDeaths!!.size, 0)
-
     }
 
     @Test
@@ -78,7 +67,6 @@ class CasesByCountryDataProviderTests {
         val newCases: ArrayList<String>? = casesByCountryData.getCasesByCountryData("new_cases")
         Thread.sleep(2000)
         assertNotEquals(newCases!!.size, 0)
-
     }
 
     @Test
@@ -87,7 +75,6 @@ class CasesByCountryDataProviderTests {
         val criticalCases: ArrayList<String>? = casesByCountryData.getCasesByCountryData("serious_critical")
         Thread.sleep(2000)
         assertNotEquals(criticalCases!!.size, 0)
-
     }
 
     @Test
@@ -96,15 +83,5 @@ class CasesByCountryDataProviderTests {
         val totalCasesPerMillionPopulation: ArrayList<String>? = casesByCountryData.getCasesByCountryData("new_cases")
         Thread.sleep(2000)
         assertNotEquals(totalCasesPerMillionPopulation!!.size, 0)
-
-    }
-
-    @Test
-    fun retrieveCasesByGlobalApiDataTest_totalCases() {
-        var globalCaseData = GlobalDataProvider()
-        val totalCases: ArrayList<String>? = globalCaseData.getGlobalCovidData("total_cases")
-        Thread.sleep(2000)
-        assertNotEquals(totalCases!!.size, 0)
-
     }
 }
