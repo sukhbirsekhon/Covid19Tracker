@@ -158,5 +158,4 @@ class MainViewModel : ViewModel() {
             )
         }
     }
-
 }
