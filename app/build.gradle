@@ -60,4 +60,5 @@ dependencies {
 
     // Dependency for bottom navigation
     implementation 'com.google.android.material:material:1.0.0'
+    testImplementation 'org.json:json:20140107'
 }
