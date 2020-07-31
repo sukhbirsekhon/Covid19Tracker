@@ -56,8 +56,10 @@ class MainFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         super.onCreate(savedInstanceState)
 
         /**
@@ -79,31 +81,33 @@ class MainFragment : Fragment() {
         /**
          * Get overview data from MainViewModel and set 'Overview' section text
          */
-        viewModel.fireData.observe(viewLifecycleOwner, Observer {
-                globalData ->
-                    recoveredTxt.text = globalData.recovered
-                    confirmedTxt.text = globalData.active
-                    deathsTxt.text = globalData.totalDeath
+        viewModel.fireData.observe(viewLifecycleOwner, Observer { globalData ->
+            recoveredTxt.text = globalData.recovered
+            confirmedTxt.text = globalData.active
+            deathsTxt.text = globalData.totalDeath
 
-                    overviewProgressBar.visibility = View.GONE
+            overviewProgressBar.visibility = View.GONE
 
-                    var linearLayoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                    linearLayoutParams.setMargins(20,20,20,20)
-                    linearLayoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                    linearLayoutParams.gravity = Gravity.CENTER
+            val linearLayoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            linearLayoutParams.setMargins(20, 20, 20, 20)
+            linearLayoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+            linearLayoutParams.gravity = Gravity.CENTER
 
-                    overviewDataSection.layoutParams = linearLayoutParams
+            overviewDataSection.layoutParams = linearLayoutParams
 
-                    overviewDataSection.visibility = View.VISIBLE
+            overviewDataSection.visibility = View.VISIBLE
         })
 
         fun setBarChartData(caseData: Cases) {
             /**
              * Loop through cases array and set confirmed array
              */
-            for(x in 0 until 5) {
-                try{
-                    if(!caseData.cases[x].isNullOrEmpty()) {
+            for (x in 0 until 5) {
+                try {
+                    if (!caseData.cases[x].isNullOrEmpty()) {
                         if (caseData.cases[x].contains(",")) {
                             val replaceCharInString = caseData.cases[x].replace(",", "")
                             val convertToFloat = replaceCharInString.toFloat()
@@ -112,10 +116,10 @@ class MainFragment : Fragment() {
                             val totalCasesToFloat = caseData.cases[x].toFloat()
                             confirmedValues.add(BarEntry(totalCasesToFloat, x))
                         }
-                    }else {
+                    } else {
                         confirmedValues.add(BarEntry(0f, x))
                     }
-                } catch(e: IOException) {
+                } catch (e: IOException) {
                     e.printStackTrace()
                 }
             }
@@ -123,9 +127,9 @@ class MainFragment : Fragment() {
             /**
              * Loop through cases array and set recovered array
              */
-            for(x in 0 until 5) {
+            for (x in 0 until 5) {
                 try {
-                    if(!caseData.totalRecovered[x].isNullOrEmpty()) {
+                    if (!caseData.totalRecovered[x].isNullOrEmpty()) {
                         if (caseData.totalRecovered[x].toLowerCase(Locale.ROOT) != "n/a") {
                             if (caseData.totalRecovered[x].contains(",")) {
                                 val replaceCharInString =
@@ -139,10 +143,10 @@ class MainFragment : Fragment() {
                         } else {
                             recoveredValues.add(BarEntry(0f, x))
                         }
-                    }else {
+                    } else {
                         deathValues.add(BarEntry(0f, x))
                     }
-                } catch(e: IOException) {
+                } catch (e: IOException) {
                     e.printStackTrace()
                 }
             }
@@ -150,22 +154,22 @@ class MainFragment : Fragment() {
             /**
              * Loop through cases array and set death array
              */
-            for(x in 0 until 5) {
-                try{
-                    if(!caseData.deaths[x].isNullOrEmpty()) {
-                        if(caseData.deaths[x].contains(",")) {
+            for (x in 0 until 5) {
+                try {
+                    if (!caseData.deaths[x].isNullOrEmpty()) {
+                        if (caseData.deaths[x].contains(",")) {
                             val replaceCharInString = caseData.deaths[x].replace(",", "")
                             val convertToFloat = replaceCharInString.toFloat()
                             deathValues.add(BarEntry(convertToFloat, x))
 
-                        }else {
+                        } else {
                             val totalDeathsToFloat = caseData.deaths[x].toFloat()
                             deathValues.add(BarEntry(totalDeathsToFloat, x))
                         }
-                    } else{
+                    } else {
                         deathValues.add(BarEntry(0f, x))
                     }
-                } catch(e: IOException) {
+                } catch (e: IOException) {
                     e.printStackTrace()
                 }
             }
@@ -173,10 +177,10 @@ class MainFragment : Fragment() {
             /**
              * Loop through countries array and set to labels array
              */
-            for(x in 0 until 5) {
-                try{
+            for (x in 0 until 5) {
+                try {
                     xAxisLabels.add(caseData.countryName[x])
-                } catch(e: IOException) {
+                } catch (e: IOException) {
                     e.printStackTrace()
                 }
             }
@@ -209,14 +213,13 @@ class MainFragment : Fragment() {
              */
             countryBarChart.data = data
             countryBarChart.setDescription("")
-            countryBarChart.animateXY(5000,5000)
+            countryBarChart.animateXY(5000, 5000)
         }
 
         /**
          * Get cases data and call function that sets data to the bar graph
          */
-        viewModel.cData.observe(viewLifecycleOwner, Observer {
-                caseData ->
+        viewModel.cData.observe(viewLifecycleOwner, Observer { caseData ->
             setBarChartData(caseData)
         })
         prepRequestLocationUpdates()
@@ -249,35 +252,50 @@ class MainFragment : Fragment() {
      */
     private fun retrieveStateCasesData() {
         try {
-            var geoCoder = Geocoder(context)
-            var addresses: List<Address>
+            val geoCoder = Geocoder(context)
+            val addresses: List<Address>
             addresses = geoCoder.getFromLocation(lat, long, 1)
 
-            var stateUtility = StateNameToCode()
-            var states: HashMap<String, String> = stateUtility.convertStateNameToCode()
+            val stateUtility = StateNameToCode()
+            val states: HashMap<String, String> = stateUtility.convertStateNameToCode()
 
-            var country: String = addresses.get(0).countryName
-            var countryCode: String = addresses.get(0).countryCode
-            var locality: String = addresses.get(0).locality
-            var state: String = addresses.get(0).adminArea
+            val country: String = addresses.get(0).countryName
+            val countryCode: String = addresses.get(0).countryCode
+            val locality: String = addresses.get(0).locality
+            val state: String = addresses.get(0).adminArea
 
             Log.d("Country name", country)
             Log.d("Country code", countryCode)
             Log.d("Locality", locality)
-            Log.d("state", states.get(state))
+            Log.d("state", states[state])
 
             GlobalScope.launch(context = Dispatchers.Main) {
                 val stateDataProvider = StateDataProvider()
 
-                val date: ArrayList<Int>? = stateDataProvider.getStateData(states.get(state).toString().toLowerCase(), "date")
-                val total: ArrayList<Int>? = stateDataProvider.getStateData(states.get(state).toString().toLowerCase(), "total")
-                val positive: ArrayList<Int>? = stateDataProvider.getStateData(states.get(state).toString().toLowerCase(), "positive")
-                val death: ArrayList<Int>? = stateDataProvider.getStateData(states.get(state).toString().toLowerCase(), "death")
-                val hospitalizedCurrently: ArrayList<Int>? = stateDataProvider.getStateData(states.get(state).toString().toLowerCase(), "hospitalizedCurrently")
+                val date: ArrayList<Int>? = stateDataProvider.getStateData(
+                    states[state].toString().toLowerCase(),
+                    "date"
+                )
+                val total: ArrayList<Int>? = stateDataProvider.getStateData(
+                    states[state].toString().toLowerCase(),
+                    "total"
+                )
+                val positive: ArrayList<Int>? = stateDataProvider.getStateData(
+                    states[state].toString().toLowerCase(),
+                    "positive"
+                )
+                val death: ArrayList<Int>? = stateDataProvider.getStateData(
+                    states[state].toString().toLowerCase(),
+                    "death"
+                )
+                val hospitalizedCurrently: ArrayList<Int>? = stateDataProvider.getStateData(
+                    states[state].toString().toLowerCase(),
+                    "hospitalizedCurrently"
+                )
                 delay(2000)
 
-                if(!date.isNullOrEmpty()) {
-                    var statesData = StatesData(
+                if (!date.isNullOrEmpty()) {
+                    val statesData = StatesData(
                         date.get(0),
                         total!!.get(0),
                         positive!!.get(0),
@@ -289,21 +307,24 @@ class MainFragment : Fragment() {
                     local_cases_progress_bar.visibility = View.GONE
 
                     Log.d("states date:", statesData.toString())
-                }
-                else {
-                    Toast.makeText(context, "Unable to update user local data", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(context, "Unable to update user local data", Toast.LENGTH_LONG)
+                        .show()
                 }
             }
-        } catch (e:Exception) {
+        } catch (e: Exception) {
             Toast.makeText(context, "Unable to update user local data", Toast.LENGTH_LONG).show()
         }
     }
 
     private fun setLocalCasesLabels(statesData: StatesData, location: String) {
-        var linearLayoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        val linearLayoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
 
         user_location.text = location
-        linearLayoutParams.setMargins(30,10,10,10)
+        linearLayoutParams.setMargins(30, 10, 10, 10)
         linearLayoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
         linearLayoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
         user_location.layoutParams = linearLayoutParams
@@ -328,13 +349,16 @@ class MainFragment : Fragment() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when(requestCode) {
+        when (requestCode) {
             LOCATION_PERMISSION_REQUEST_CODE -> {
-                if(grantResults.isNotEmpty() && grantResults[0] ==  PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     requestLocationUpdate()
-                }
-                else {
-                    Toast.makeText(context, "Unable to update location without permission", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(
+                        context,
+                        "Unable to update location without permission",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         }

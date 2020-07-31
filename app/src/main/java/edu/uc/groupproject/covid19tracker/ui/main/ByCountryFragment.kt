@@ -26,8 +26,10 @@ class ByCountryFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreate(savedInstanceState)
 
         /**
@@ -51,13 +53,20 @@ class ByCountryFragment : Fragment() {
             val casesListViewItems = ArrayList<Cases>()
             val spinnerItemArray = ArrayList<String>()
             spinnerItemArray.add("All Countries")
-            for(x in 0 until caseData.countryName.size) {
+            for (x in 0 until caseData.countryName.size) {
                 spinnerItemArray.add(caseData.countryName[x])
                 casesListViewItems.add(
-                    Cases(cases = arrayListOf(caseData.cases[x]), deaths = arrayListOf(caseData.deaths[x]),
-                    totalRecovered = arrayListOf(caseData.totalRecovered[x]), activeCases = arrayListOf(caseData.activeCases[x]),
-                    newCases = arrayListOf(caseData.newCases[x]), countryName = arrayListOf(caseData.countryName[x]), newDeaths = arrayListOf(caseData.newDeaths[x]),
-                    seriousCritical = arrayListOf(caseData.seriousCritical[x]), totalCasesPerMillionPopulation = arrayListOf(caseData.totalCasesPerMillionPopulation[x]))
+                    Cases(
+                        cases = arrayListOf(caseData.cases[x]),
+                        deaths = arrayListOf(caseData.deaths[x]),
+                        totalRecovered = arrayListOf(caseData.totalRecovered[x]),
+                        activeCases = arrayListOf(caseData.activeCases[x]),
+                        newCases = arrayListOf(caseData.newCases[x]),
+                        countryName = arrayListOf(caseData.countryName[x]),
+                        newDeaths = arrayListOf(caseData.newDeaths[x]),
+                        seriousCritical = arrayListOf(caseData.seriousCritical[x]),
+                        totalCasesPerMillionPopulation = arrayListOf(caseData.totalCasesPerMillionPopulation[x])
+                    )
                 )
             }
 
@@ -70,7 +79,8 @@ class ByCountryFragment : Fragment() {
             /**
              * Declare array adapter and set spinner values
              */
-            val spinnerItemAdapter = ArrayAdapter(view.context, android.R.layout.simple_spinner_item, spinnerItemArray)
+            val spinnerItemAdapter =
+                ArrayAdapter(view.context, android.R.layout.simple_spinner_item, spinnerItemArray)
             countrySpinner.adapter = spinnerItemAdapter
 
             /**
@@ -83,20 +93,29 @@ class ByCountryFragment : Fragment() {
                 /**
                  * set onItemSelected to display selected country
                  */
-                override fun onItemSelected(parent: AdapterView<*>?, adapterView: View?,
-                                            position: Int, id: Long) {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?, adapterView: View?,
+                    position: Int, id: Long
+                ) {
                     val element = spinnerItemAdapter.getItem(position)
-                    if(element == "All Countries") {
+                    if (element == "All Countries") {
                         countryListView.adapter = casesListViewAdapter
-                    }else {
+                    } else {
                         val newCasesListViewItems = ArrayList<Cases>()
-                        for(x in 0 until caseData.countryName.size) {
-                            if(caseData.countryName[x] == element){
+                        for (x in 0 until caseData.countryName.size) {
+                            if (caseData.countryName[x] == element) {
                                 newCasesListViewItems.add(
-                                    Cases(cases = arrayListOf(caseData.cases[x]), deaths = arrayListOf(caseData.deaths[x]),
-                                        totalRecovered = arrayListOf(caseData.totalRecovered[x]), activeCases = arrayListOf(caseData.activeCases[x]),
-                                        newCases = arrayListOf(caseData.newCases[x]), countryName = arrayListOf(caseData.countryName[x]), newDeaths = arrayListOf(caseData.newDeaths[x]),
-                                        seriousCritical = arrayListOf(caseData.seriousCritical[x]), totalCasesPerMillionPopulation = arrayListOf(caseData.totalCasesPerMillionPopulation[x]))
+                                    Cases(
+                                        cases = arrayListOf(caseData.cases[x]),
+                                        deaths = arrayListOf(caseData.deaths[x]),
+                                        totalRecovered = arrayListOf(caseData.totalRecovered[x]),
+                                        activeCases = arrayListOf(caseData.activeCases[x]),
+                                        newCases = arrayListOf(caseData.newCases[x]),
+                                        countryName = arrayListOf(caseData.countryName[x]),
+                                        newDeaths = arrayListOf(caseData.newDeaths[x]),
+                                        seriousCritical = arrayListOf(caseData.seriousCritical[x]),
+                                        totalCasesPerMillionPopulation = arrayListOf(caseData.totalCasesPerMillionPopulation[x])
+                                    )
                                 )
                             }
                         }
@@ -112,8 +131,7 @@ class ByCountryFragment : Fragment() {
         /**
          * Get cases data and call function that sets data to the list view
          */
-        viewModel.cData.observe(viewLifecycleOwner, Observer {
-                caseData ->
+        viewModel.cData.observe(viewLifecycleOwner, Observer { caseData ->
             setCountryListViewData(caseData)
             progressBar.visibility = View.GONE
         })

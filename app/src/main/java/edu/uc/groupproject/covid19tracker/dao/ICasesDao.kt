@@ -6,7 +6,6 @@ import retrofit2.http.GET
 import kotlin.collections.ArrayList
 
 interface ICasesDao {
-
     /**
      * Call API with specific uri to retrieve global data
      */

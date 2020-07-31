@@ -7,9 +7,9 @@ import java.io.IOException
 
 class NewsDataProvider {
 
-    fun getNewsData(dataType: String): ArrayList<String>?  {
-         val client = OkHttpClient()
-         val request:Request = Request.Builder()
+    fun getNewsData(dataType: String): ArrayList<String>? {
+        val client = OkHttpClient()
+        val request: Request = Request.Builder()
             .url("https://newsapi.org/v2/top-headlines?q=coronavirus&sortBy=popularity&apiKey=6c8417610d7e44a59e12d3758d004968")
             .get()
             .build()
@@ -37,7 +37,9 @@ class NewsDataProvider {
                         val newsElement = newsObjectArray.getJSONObject(i).getString(dataType)
                         data.add(newsElement)
                     }
-                } catch (e: Exception) {e.printStackTrace()}
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
         })
         return data

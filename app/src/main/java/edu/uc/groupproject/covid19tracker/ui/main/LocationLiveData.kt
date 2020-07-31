@@ -26,10 +26,10 @@ class LocationLiveData(context: Context) : LiveData<LocationDetails>() {
     @SuppressLint("MissingPermission")
     override fun onActive() {
         super.onActive()
-        fusedLocationClient.lastLocation.addOnSuccessListener {
-                location: Location -> location.also {
-            setLocationData(it)
-        }
+        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location ->
+            location.also {
+                setLocationData(it)
+            }
         }
         startLocationUpdates()
     }
@@ -60,8 +60,8 @@ class LocationLiveData(context: Context) : LiveData<LocationDetails>() {
     }
 
     companion object {
-        val ONE_MINUTE : Long = 60000
-        val locationRequest : LocationRequest = LocationRequest.create().apply {
+        val ONE_MINUTE: Long = 60000
+        val locationRequest: LocationRequest = LocationRequest.create().apply {
             interval = ONE_MINUTE
             fastestInterval = ONE_MINUTE / 4
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY

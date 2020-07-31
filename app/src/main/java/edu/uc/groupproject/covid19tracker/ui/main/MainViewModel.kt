@@ -19,7 +19,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 class MainViewModel : ViewModel() {
     var gmData: MutableLiveData<GlobalData> = MutableLiveData<GlobalData>()
@@ -27,8 +26,6 @@ class MainViewModel : ViewModel() {
     var nData: MutableLiveData<News> = MutableLiveData<News>()
 
     var firestore = Firebase.firestore
-    var documentId: String = ""
-    var documentData: Map<String, Any> = HashMap()
     var firebaseGData: FirebaseGlobalData = FirebaseGlobalData()
     var fireData: MutableLiveData<FirebaseGlobalData> = MutableLiveData<FirebaseGlobalData>()
 
@@ -53,8 +50,8 @@ class MainViewModel : ViewModel() {
 
     private suspend fun assignNewsData() {
         /**
-        * Call API to retrieve news data
-        */
+         * Call API to retrieve news data
+         */
         val newsData = NewsDataProvider()
 
         val author: ArrayList<String>? = newsData.getNewsData("author")
@@ -69,9 +66,18 @@ class MainViewModel : ViewModel() {
         /**
          * Set fetched news data to DTO object
          */
-        val newsDto = News(author!!, title!!, description!!, url!!, urlToImage!!, publishedAt!!, content!!)
+        val newsDto =
+            News(author!!, title!!, description!!, url!!, urlToImage!!, publishedAt!!, content!!)
 
         nData.value = newsDto
+
+        uploadFirebaseNewsData(newsDto)
+    }
+
+    fun uploadFirebaseNewsData(newsDto: News) {
+        firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
+        val collection = firestore.collection("News").document(LocalDateTime.now().toString())
+        collection.set(newsDto)
     }
 
     private suspend fun assignCountryByCasesData() {
@@ -84,20 +90,34 @@ class MainViewModel : ViewModel() {
         val cases: ArrayList<String>? = casesByCountry.getCasesByCountryData("cases")
         val deaths: ArrayList<String>? = casesByCountry.getCasesByCountryData("deaths")
         val active: ArrayList<String>? = casesByCountry.getCasesByCountryData("active_cases")
-        val totalRecovered: ArrayList<String>? = casesByCountry.getCasesByCountryData("total_recovered")
+        val totalRecovered: ArrayList<String>? =
+            casesByCountry.getCasesByCountryData("total_recovered")
         val newDeaths: ArrayList<String>? = casesByCountry.getCasesByCountryData("new_deaths")
         val newCases: ArrayList<String>? = casesByCountry.getCasesByCountryData("new_cases")
-        val seriousCritical: ArrayList<String>? = casesByCountry.getCasesByCountryData("serious_critical")
-        val totalCasesPerMillionPopulation: ArrayList<String>? = casesByCountry.getCasesByCountryData("total_cases_per_1m_population")
+        val seriousCritical: ArrayList<String>? =
+            casesByCountry.getCasesByCountryData("serious_critical")
+        val totalCasesPerMillionPopulation: ArrayList<String>? =
+            casesByCountry.getCasesByCountryData("total_cases_per_1m_population")
         delay(2000)
 
         /**
          * Set fetched country data to DTO object
          */
-        val casesDto = Cases(country!!, cases!!, deaths!!, active!!, totalRecovered!!, newDeaths!!,
-            newCases!!, seriousCritical!!, totalCasesPerMillionPopulation!!)
+        val casesDto = Cases(
+            country!!, cases!!, deaths!!, active!!, totalRecovered!!, newDeaths!!,
+            newCases!!, seriousCritical!!, totalCasesPerMillionPopulation!!
+        )
 
         cData.value = casesDto
+
+        uploadFirebaseCasesByCountryData(casesDto)
+    }
+
+    fun uploadFirebaseCasesByCountryData(casesDto: Cases) {
+        firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
+        val collection =
+            firestore.collection("Cases By Country").document(LocalDateTime.now().toString())
+        collection.set(casesDto)
     }
 
     private suspend fun assignGlobalData() {
@@ -113,37 +133,40 @@ class MainViewModel : ViewModel() {
         val gNewCases: ArrayList<String>? = gdp.getGlobalCovidData("new_cases")
         val gNewDeaths: ArrayList<String>? = gdp.getGlobalCovidData("new_deaths")
         val gSeriousCritical: ArrayList<String>? = gdp.getGlobalCovidData("serious_critical")
-        val gCasesPerMillion: ArrayList<String>? = gdp.getGlobalCovidData("total_cases_per_1m_population")
-        val gDeathPerMillion: ArrayList<String>? = gdp.getGlobalCovidData("deaths_per_1m_population")
+        val gCasesPerMillion: ArrayList<String>? =
+            gdp.getGlobalCovidData("total_cases_per_1m_population")
+        val gDeathPerMillion: ArrayList<String>? =
+            gdp.getGlobalCovidData("deaths_per_1m_population")
         val gStatistics: ArrayList<String>? = gdp.getGlobalCovidData("statistic_taken_at")
         delay(2000)
 
-        globalDataDto = GlobalData(gCases!![0], gActive!![0], gTotalDeath!![0], gRecovered!![0],
+        globalDataDto = GlobalData(
+            gCases!![0], gActive!![0], gTotalDeath!![0], gRecovered!![0],
             gNewCases!![0], gNewDeaths!![0], gSeriousCritical!![0], gCasesPerMillion!![0],
-            gDeathPerMillion!![0], gStatistics!![0])
+            gDeathPerMillion!![0], gStatistics!![0]
+        )
 
         firebaseGData = FirebaseGlobalData(gCases[0], gActive[0], gTotalDeath[0], gRecovered[0])
 
         fireData.value = firebaseGData
 
-        uploadDataToFirebase(firebaseGData)
+        uploadFirebaseGlobalData(firebaseGData)
         retrieveFirebaseGlobalData()
     }
 
-    fun uploadDataToFirebase(firebaseGData: FirebaseGlobalData) {
-
+    fun uploadFirebaseGlobalData(firebaseGData: FirebaseGlobalData) {
         firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
-        val collection = firestore.collection("Global Data").document(LocalDateTime.now().toString())
+        val collection =
+            firestore.collection("Global Data").document(LocalDateTime.now().toString())
         collection.set(firebaseGData)
-
     }
 
     fun retrieveFirebaseGlobalData() {
         firestore.collection("Global Data").get().addOnSuccessListener { result ->
-           firebaseActiveCases = result.documents.last().data!!["active"].toString()
-           firebaseRecoveredCases = result.documents.last().data!!["recovered"].toString()
-           firebaseFatalCases = result.documents.last().data!!["totalDeath"].toString()
-           firebaseTotalCases = result.documents.last().data!!["cases"].toString()
+            firebaseActiveCases = result.documents.last().data!!["active"].toString()
+            firebaseRecoveredCases = result.documents.last().data!!["recovered"].toString()
+            firebaseFatalCases = result.documents.last().data!!["totalDeath"].toString()
+            firebaseTotalCases = result.documents.last().data!!["cases"].toString()
 
             Log.d("Active", firebaseActiveCases)
             Log.d("Fatal", firebaseFatalCases)

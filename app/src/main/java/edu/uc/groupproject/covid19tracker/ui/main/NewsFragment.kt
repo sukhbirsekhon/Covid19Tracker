@@ -29,8 +29,10 @@ class NewsFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         /**
          * Declare field and other necessary variables
          */
@@ -52,11 +54,17 @@ class NewsFragment : Fragment() {
              * Declare news list array, loop through news data, and set data to list view
              */
             val newsListViewItems = ArrayList<News>()
-            for(x in 0 until newsData.title.size) {
+            for (x in 0 until newsData.title.size) {
                 newsListViewItems.add(
-                    News(author = arrayListOf(newsData.author[x]), title = arrayListOf(newsData.title[x]), description = arrayListOf(newsData.description[x]),
-                    url = arrayListOf(newsData.url[x]), urlToImage = arrayListOf(newsData.urlToImage[x]), publishedAt = arrayListOf(newsData.publishedAt[x]),
-                    content = arrayListOf(newsData.title[x]))
+                    News(
+                        author = arrayListOf(newsData.author[x]),
+                        title = arrayListOf(newsData.title[x]),
+                        description = arrayListOf(newsData.description[x]),
+                        url = arrayListOf(newsData.url[x]),
+                        urlToImage = arrayListOf(newsData.urlToImage[x]),
+                        publishedAt = arrayListOf(newsData.publishedAt[x]),
+                        content = arrayListOf(newsData.title[x])
+                    )
                 )
             }
             val arrAdapter = ItemAdapter2(view.context, newsListViewItems)
@@ -76,21 +84,37 @@ class NewsFragment : Fragment() {
              * set listener for search bar to filter through news list
              */
             val searchBar: EditText = view.findViewById(R.id.search_bar) as EditText
-            searchBar.addTextChangedListener(object: TextWatcher {
-                override fun afterTextChanged(s: Editable?) { }
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+            searchBar.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {}
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
 
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                    if(s.isEmpty()) {
+                    if (s.isEmpty()) {
                         newsListView.adapter = arrAdapter
-                    }else {
+                    } else {
                         val searchedNewsListViewItems = ArrayList<News>()
-                        for(x in 0 until newsData.title.size) {
-                            if(newsData.title[x].contains(s, true) || newsData.description[x].contains(s, true)) {
+                        for (x in 0 until newsData.title.size) {
+                            if (newsData.title[x].contains(
+                                    s,
+                                    true
+                                ) || newsData.description[x].contains(s, true)
+                            ) {
                                 searchedNewsListViewItems.add(
-                                    News(author = arrayListOf(newsData.author[x]), title = arrayListOf(newsData.title[x]), description = arrayListOf(newsData.description[x]),
-                                        url = arrayListOf(newsData.url[x]), urlToImage = arrayListOf(newsData.urlToImage[x]), publishedAt = arrayListOf(newsData.publishedAt[x]),
-                                        content = arrayListOf(newsData.title[x]))
+                                    News(
+                                        author = arrayListOf(newsData.author[x]),
+                                        title = arrayListOf(newsData.title[x]),
+                                        description = arrayListOf(newsData.description[x]),
+                                        url = arrayListOf(newsData.url[x]),
+                                        urlToImage = arrayListOf(newsData.urlToImage[x]),
+                                        publishedAt = arrayListOf(newsData.publishedAt[x]),
+                                        content = arrayListOf(newsData.title[x])
+                                    )
                                 )
                             }
                         }
@@ -107,8 +131,7 @@ class NewsFragment : Fragment() {
         /**
          * Get news data and call function that sets data to the list view
          */
-        viewModel.nData.observe(viewLifecycleOwner, Observer {
-                newsData ->
+        viewModel.nData.observe(viewLifecycleOwner, Observer { newsData ->
             setNewsListViewData(newsData)
             progressBar.visibility = View.GONE
         })

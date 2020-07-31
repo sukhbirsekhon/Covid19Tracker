@@ -22,13 +22,17 @@ class CasesByCountryDataProvider {
     /**
      * Retrieve country by cases covid19 data
      */
-    fun getCasesByCountryData(dataType: String):  ArrayList<String> {
+    fun getCasesByCountryData(dataType: String): ArrayList<String> {
         val data = ArrayList<String>()
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                Log.d("onFailure", "onFailure from getCasesByCountryData called : ${e.printStackTrace()}")
+                Log.d(
+                    "onFailure",
+                    "onFailure from getCasesByCountryData called : ${e.printStackTrace()}"
+                )
             }
+
             override fun onResponse(call: Call, response: Response) {
                 try {
                     /**

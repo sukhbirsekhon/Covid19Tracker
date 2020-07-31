@@ -16,8 +16,8 @@ class StateDataProvider {
         /**
          * Build http API request to retrieve global stats
          */
-         var client = OkHttpClient()
-         var request = Request.Builder()
+        val client = OkHttpClient()
+        val request = Request.Builder()
             .url("https://covidtracking.com/api/v1/states/" + stateCode + "/current.json")
             .get()
             .build()
@@ -39,10 +39,10 @@ class StateDataProvider {
                     val stateData = response.body()!!.string()
                     val stateObject = JSONObject(stateData)
                     val dataObject = stateObject[dataType]
-                    if(dataObject is Int) {
+                    if (dataObject is Int) {
                         val element = dataObject
                         data.add(element)
-                    } else if(dataObject is JsonObject){
+                    } else if (dataObject is JsonObject) {
                         val integer = 0
                         data.add(integer)
                     }

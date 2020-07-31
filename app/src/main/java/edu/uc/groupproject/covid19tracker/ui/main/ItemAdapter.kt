@@ -9,7 +9,8 @@ import android.widget.TextView
 import edu.uc.groupproject.covid19tracker.R
 import edu.uc.groupproject.covid19tracker.dto.Cases
 
-class ItemAdapter(private var context: Context, private var arrayCaseList: ArrayList<Cases>): BaseAdapter() {
+class ItemAdapter(private var context: Context, private var arrayCaseList: ArrayList<Cases>) :
+    BaseAdapter() {
 
     override fun getItem(position: Int): Any {
         return arrayCaseList[position]

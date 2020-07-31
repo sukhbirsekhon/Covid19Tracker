@@ -27,7 +27,10 @@ class GlobalDataProvider {
         client.newCall(request).enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
-                Log.d("onFailure", "onFailure called from getGlobalCovidData: ${e.printStackTrace()}")
+                Log.d(
+                    "onFailure",
+                    "onFailure called from getGlobalCovidData: ${e.printStackTrace()}"
+                )
             }
 
             override fun onResponse(call: Call, response: Response) {

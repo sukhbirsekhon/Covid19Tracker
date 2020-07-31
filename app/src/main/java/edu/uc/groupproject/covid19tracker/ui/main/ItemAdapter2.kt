@@ -16,7 +16,8 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import kotlin.collections.ArrayList
 
-class ItemAdapter2(private var context: Context, private var arrayNewsList: ArrayList<News>): BaseAdapter() {
+class ItemAdapter2(private var context: Context, private var arrayNewsList: ArrayList<News>) :
+    BaseAdapter() {
 
     override fun getItem(position: Int): News {
         return arrayNewsList[position]
@@ -58,12 +59,13 @@ class ItemAdapter2(private var context: Context, private var arrayNewsList: Arra
 
         val date: String
 
-        date = if(items.publishedAt[0].contains("T") && items.publishedAt[0].contains("Z")) {
+        date = if (items.publishedAt[0].contains("T") && items.publishedAt[0].contains("Z")) {
             Instant.parse(items.publishedAt[0]).atOffset(ZoneOffset.UTC)
                 .format(DateTimeFormatter.ofPattern("MM-dd-yyyy h:mm a"))
-        }else if(items.publishedAt[0].contains("T") && !items.publishedAt[0].contains("Z")) {
-            ZonedDateTime.parse(items.publishedAt[0]).format(DateTimeFormatter.ofPattern("MM-dd-yyyy h:mm a"))
-        }else {
+        } else if (items.publishedAt[0].contains("T") && !items.publishedAt[0].contains("Z")) {
+            ZonedDateTime.parse(items.publishedAt[0])
+                .format(DateTimeFormatter.ofPattern("MM-dd-yyyy h:mm a"))
+        } else {
             items.publishedAt[0]
         }
 
