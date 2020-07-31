@@ -5,10 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import android.widget.Spinner
+import android.widget.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -40,6 +37,7 @@ class ByCountryFragment : Fragment() {
         val countryListView: ListView = view.findViewById(R.id.country_list_view)
         val countrySpinner: Spinner = view.findViewById(R.id.country_spinner)
         val refreshView: SwipeRefreshLayout = view.findViewById(R.id.by_country_refresh_view)
+        val progressBar: ProgressBar = view.findViewById(R.id.cases_by_country_progress_bar)
 
         /**
          * Add refresh listen
@@ -117,6 +115,7 @@ class ByCountryFragment : Fragment() {
         viewModel.cData.observe(viewLifecycleOwner, Observer {
                 caseData ->
             setCountryListViewData(caseData)
+            progressBar.visibility = View.GONE
         })
 
         return view

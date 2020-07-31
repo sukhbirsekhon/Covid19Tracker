@@ -6,12 +6,11 @@ import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -74,6 +73,8 @@ class MainFragment : Fragment() {
         val recoveredValues = ArrayList<BarEntry>()
         val deathValues = ArrayList<BarEntry>()
         val barDataSetList: ArrayList<IBarDataSet> = ArrayList()
+        val overviewProgressBar: ProgressBar = view.findViewById(R.id.overview_progress_bar)
+        val overviewDataSection: LinearLayout = view.findViewById(R.id.overview_data)
 
         /**
          * Get overview data from MainViewModel and set 'Overview' section text
@@ -83,6 +84,17 @@ class MainFragment : Fragment() {
                     recoveredTxt.text = globalData.recovered
                     confirmedTxt.text = globalData.active
                     deathsTxt.text = globalData.totalDeath
+
+                    overviewProgressBar.visibility = View.GONE
+
+                    var linearLayoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                    linearLayoutParams.setMargins(20,20,20,20)
+                    linearLayoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+                    linearLayoutParams.gravity = Gravity.CENTER
+
+                    overviewDataSection.layoutParams = linearLayoutParams
+
+                    overviewDataSection.visibility = View.VISIBLE
         })
 
         fun setBarChartData(caseData: Cases) {
@@ -274,6 +286,7 @@ class MainFragment : Fragment() {
                     )
 
                     setLocalCasesLabels(statesData, "$locality, $state")
+                    local_cases_progress_bar.visibility = View.GONE
 
                     Log.d("states date:", statesData.toString())
                 }

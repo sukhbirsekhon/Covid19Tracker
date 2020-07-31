@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ListView
+import android.widget.ProgressBar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -36,6 +37,7 @@ class NewsFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_news, container, false)
         val newsListView: ListView = view.findViewById(R.id.news_list_view)
         val refreshView: SwipeRefreshLayout = view.findViewById(R.id.news_refresh_view)
+        val progressBar: ProgressBar = view.findViewById(R.id.news_progress_bar)
 
         /**
          * Add refresh listen
@@ -108,6 +110,7 @@ class NewsFragment : Fragment() {
         viewModel.nData.observe(viewLifecycleOwner, Observer {
                 newsData ->
             setNewsListViewData(newsData)
+            progressBar.visibility = View.GONE
         })
 
         return view
